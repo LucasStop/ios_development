@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="22505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22504"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8+ format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--View Controller-->
+        <scene sceneID="tne-QT-ifu">
+            <objects>
+                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="DesafioAutolayout" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Calculadora" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lbl-titulo">
+                                <rect key="frame" x="0.0" y="60" width="393" height="34"/>
+                                <fontDescription key="fontDescription" type="system" weight="bold" pointSize="28"/>
+                                <color key="textColor" systemColor="labelColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Primeiro número" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="txt-campoA">
+                                <rect key="frame" x="24" y="120" width="345" height="44"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="hgt-campoA"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <textInputTraits key="textInputTraits" keyboardType="decimalPad"/>
+                            </textField>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Segundo número" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="txt-campoB">
+                                <rect key="frame" x="24" y="176" width="345" height="44"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="hgt-campoB"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <textInputTraits key="textInputTraits" keyboardType="decimalPad"/>
+                            </textField>
+                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="stk-operacoes">
+                                <rect key="frame" x="24" y="244" width="345" height="50"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="btn-somar">
+                                        <rect key="frame" x="0.0" y="0.0" width="81.75" height="50"/>
+                                        <color key="backgroundColor" systemColor="systemBlueColor"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="50" id="hgt-btn-somar"/>
+                                        </constraints>
+                                        <state key="normal" title="+">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </state>
+                                        <buttonConfiguration key="configuration" style="filled" title="+">
+                                            <fontDescription key="fontDescription" type="system" weight="bold" pointSize="24"/>
+                                        </buttonConfiguration>
+                                        <connections>
+                                            <action selector="somar:" destination="BYZ-38-t0r" eventType="touchUpInside" id="act-somar"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="btn-subtrair">
+                                        <rect key="frame" x="93.75" y="0.0" width="81.75" height="50"/>
+                                        <state key="normal" title="−"/>
+                                        <buttonConfiguration key="configuration" style="filled" title="−">
+                                            <fontDescription key="fontDescription" type="system" weight="bold" pointSize="24"/>
+                                        </buttonConfiguration>
+                                        <connections>
+                                            <action selector="subtrair:" destination="BYZ-38-t0r" eventType="touchUpInside" id="act-subtrair"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="btn-mult">
+                                        <rect key="frame" x="187.5" y="0.0" width="81.75" height="50"/>
+                                        <state key="normal" title="×"/>
+                                        <buttonConfiguration key="configuration" style="filled" title="×">
+                                            <fontDescription key="fontDescription" type="system" weight="bold" pointSize="24"/>
+                                        </buttonConfiguration>
+                                        <connections>
+                                            <action selector="multiplicar:" destination="BYZ-38-t0r" eventType="touchUpInside" id="act-mult"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="btn-div">
+                                        <rect key="frame" x="281.25" y="0.0" width="81.75" height="50"/>
+                                        <state key="normal" title="÷"/>
+                                        <buttonConfiguration key="configuration" style="filled" title="÷">
+                                            <fontDescription key="fontDescription" type="system" weight="bold" pointSize="24"/>
+                                        </buttonConfiguration>
+                                        <connections>
+                                            <action selector="dividir:" destination="BYZ-38-t0r" eventType="touchUpInside" id="act-div"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                            </stackView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="btn-limpar">
+                                <rect key="frame" x="24" y="318" width="345" height="44"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="hgt-limpar"/>
+                                </constraints>
+                                <state key="normal" title="Limpar"/>
+                                <buttonConfiguration key="configuration" style="gray" title="Limpar">
+                                    <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="18"/>
+                                </buttonConfiguration>
+                                <connections>
+                                    <action selector="limpar:" destination="BYZ-38-t0r" eventType="touchUpInside" id="act-limpar"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Resultado: —" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lbl-resultado">
+                                <rect key="frame" x="24" y="386" width="345" height="24"/>
+                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="20"/>
+                                <color key="textColor" systemColor="labelColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="lbl-titulo" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="20" id="cst-001"/>
+                            <constraint firstItem="lbl-titulo" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="cst-002"/>
+
+                            <constraint firstItem="txt-campoA" firstAttribute="top" secondItem="lbl-titulo" secondAttribute="bottom" constant="26" id="cst-003"/>
+                            <constraint firstItem="txt-campoA" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="24" id="cst-004"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="txt-campoA" secondAttribute="trailing" constant="24" id="cst-005"/>
+
+                            <constraint firstItem="txt-campoB" firstAttribute="top" secondItem="txt-campoA" secondAttribute="bottom" constant="12" id="cst-006"/>
+                            <constraint firstItem="txt-campoB" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="24" id="cst-007"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="txt-campoB" secondAttribute="trailing" constant="24" id="cst-008"/>
+
+                            <constraint firstItem="stk-operacoes" firstAttribute="top" secondItem="txt-campoB" secondAttribute="bottom" constant="24" id="cst-009"/>
+                            <constraint firstItem="stk-operacoes" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="24" id="cst-010"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="stk-operacoes" secondAttribute="trailing" constant="24" id="cst-011"/>
+
+                            <constraint firstItem="btn-limpar" firstAttribute="top" secondItem="stk-operacoes" secondAttribute="bottom" constant="24" id="cst-012"/>
+                            <constraint firstItem="btn-limpar" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="24" id="cst-013"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="btn-limpar" secondAttribute="trailing" constant="24" id="cst-014"/>
+
+                            <constraint firstItem="lbl-resultado" firstAttribute="top" secondItem="btn-limpar" secondAttribute="bottom" constant="24" id="cst-015"/>
+                            <constraint firstItem="lbl-resultado" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="24" id="cst-016"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="lbl-resultado" secondAttribute="trailing" constant="24" id="cst-017"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="campoA" destination="txt-campoA" id="out-campoA"/>
+                        <outlet property="campoB" destination="txt-campoB" id="out-campoB"/>
+                        <outlet property="lblResultado" destination="lbl-resultado" id="out-lblResultado"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="0.0" y="0.0"/>
+        </scene>
+    </scenes>
+    <resources>
+        <systemColor name="labelColor">
+            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemBlueColor">
+            <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+    </resources>
+</document>
