@@ -1,0 +1,35 @@
+name: LoginViewCode
+options:
+  bundleIdPrefix: br.pucpr.lucasstopinski
+  deploymentTarget:
+    iOS: "16.0"
+  createIntermediateGroups: true
+
+targets:
+  LoginViewCode:
+    type: application
+    platform: iOS
+    sources:
+      - path: LoginViewCode
+    info:
+      path: LoginViewCode/Info.plist
+      properties:
+        CFBundleDisplayName: Login ViewCode
+        UILaunchScreen:
+          UIColorName: ""
+        UIApplicationSceneManifest:
+          UIApplicationSupportsMultipleScenes: false
+          UISceneConfigurations:
+            UIWindowSceneSessionRoleApplication:
+              - UISceneConfigurationName: Default Configuration
+                UISceneDelegateClassName: $(PRODUCT_MODULE_NAME).SceneDelegate
+        UISupportedInterfaceOrientations:
+          - UIInterfaceOrientationPortrait
+          - UIInterfaceOrientationLandscapeLeft
+          - UIInterfaceOrientationLandscapeRight
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: br.pucpr.lucasstopinski.LoginViewCode
+        TARGETED_DEVICE_FAMILY: "1,2"
+        SWIFT_VERSION: "5.0"
+        GENERATE_INFOPLIST_FILE: NO
