@@ -1,0 +1,36 @@
+name: ListaDeTarefas
+options:
+  bundleIdPrefix: br.pucpr.lucasstopinski
+  deploymentTarget:
+    iOS: "16.0"
+  createIntermediateGroups: true
+
+targets:
+  ListaDeTarefas:
+    type: application
+    platform: iOS
+    sources:
+      - path: ListaDeTarefas
+    info:
+      path: ListaDeTarefas/Info.plist
+      properties:
+        CFBundleDisplayName: Lista de Tarefas
+        UILaunchStoryboardName: LaunchScreen
+        UIMainStoryboardFile: Main
+        UIApplicationSceneManifest:
+          UIApplicationSupportsMultipleScenes: false
+          UISceneConfigurations:
+            UIWindowSceneSessionRoleApplication:
+              - UISceneConfigurationName: Default Configuration
+                UISceneDelegateClassName: $(PRODUCT_MODULE_NAME).SceneDelegate
+                UISceneStoryboardFile: Main
+        UISupportedInterfaceOrientations:
+          - UIInterfaceOrientationPortrait
+          - UIInterfaceOrientationLandscapeLeft
+          - UIInterfaceOrientationLandscapeRight
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: br.pucpr.lucasstopinski.ListaDeTarefas
+        TARGETED_DEVICE_FAMILY: "1,2"
+        SWIFT_VERSION: "5.0"
+        GENERATE_INFOPLIST_FILE: NO

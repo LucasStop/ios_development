@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="22505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="nav-controller">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22504"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Navigation Controller-->
+        <scene sceneID="nav-scene">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="nav-controller" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="nav-bar">
+                        <rect key="frame" x="0.0" y="0.0" width="0.0" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="vc-id" kind="relationship" relationship="rootViewController" id="root-segue"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="nav-fr" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-100" y="0"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="vc-scene">
+            <objects>
+                <viewController id="vc-id" customClass="ViewController" customModule="ListaDeTarefas" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="root-view">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="horizontal" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="top-stack">
+                                <rect key="frame" x="16" y="103" width="361" height="44"/>
+                                <subviews>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Nova tarefa..." minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="text-field">
+                                        <rect key="frame" x="0.0" y="6" width="269" height="32"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="44" id="tf-h"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences" autocorrectionType="default" returnKeyType="done"/>
+                                    </textField>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="add-button">
+                                        <rect key="frame" x="277" y="0.0" width="84" height="44"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="44" id="btn-h"/>
+                                            <constraint firstAttribute="width" constant="84" id="btn-w"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="16"/>
+                                        <state key="normal" title="Adicionar"/>
+                                        <connections>
+                                            <action selector="adicionarTapped:" destination="vc-id" eventType="touchUpInside" id="add-action"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                            </stackView>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="table-view">
+                                <rect key="frame" x="0.0" y="159" width="393" height="659"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            </tableView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="safe-area"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="top-stack" firstAttribute="leading" secondItem="safe-area" secondAttribute="leading" constant="16" id="c1"/>
+                            <constraint firstItem="safe-area" firstAttribute="trailing" secondItem="top-stack" secondAttribute="trailing" constant="16" id="c2"/>
+                            <constraint firstItem="top-stack" firstAttribute="top" secondItem="safe-area" secondAttribute="top" constant="16" id="c3"/>
+                            <constraint firstItem="table-view" firstAttribute="top" secondItem="top-stack" secondAttribute="bottom" constant="12" id="c4"/>
+                            <constraint firstItem="table-view" firstAttribute="leading" secondItem="root-view" secondAttribute="leading" id="c5"/>
+                            <constraint firstAttribute="trailing" secondItem="table-view" secondAttribute="trailing" id="c6"/>
+                            <constraint firstItem="safe-area" firstAttribute="bottom" secondItem="table-view" secondAttribute="bottom" id="c7"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="Lista de Tarefas" largeTitleDisplayMode="always" id="nav-item"/>
+                    <connections>
+                        <outlet property="adicionarButton" destination="add-button" id="o-btn"/>
+                        <outlet property="tableView" destination="table-view" id="o-tv"/>
+                        <outlet property="tarefaTextField" destination="text-field" id="o-tf"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="vc-fr" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="500" y="0"/>
+        </scene>
+    </scenes>
+    <resources>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>
