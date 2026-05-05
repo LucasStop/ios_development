@@ -1,0 +1,25 @@
+# macOS
+.DS_Store
+
+# Xcode user-specific
+**/xcuserdata/
+**/*.xcuserstate
+**/*.xcuserstatedata
+
+# Build artifacts
+build/
+DerivedData/
+
+# Swift Package Manager
+.build/
+Packages/
+Package.resolved
+
+# CocoaPods
+Pods/
+
+# Carthage
+Carthage/Build/
+
+# Claude Code local state
+.claude/
