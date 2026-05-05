@@ -1,0 +1,12 @@
+{
+  "images" : [
+    {
+      "filename" : "bakun_aldeia.jpg",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}

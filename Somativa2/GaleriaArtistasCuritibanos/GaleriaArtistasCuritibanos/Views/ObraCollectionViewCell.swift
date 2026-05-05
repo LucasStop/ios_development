@@ -65,7 +65,12 @@ final class ObraCollectionViewCell: UICollectionViewCell {
     func configure(with obra: ObraDeArte) {
         tituloLabel.text = obra.titulo
         artistaLabel.text = obra.artista
-        let imageSize = CGSize(width: 300, height: 300)
-        imagemView.image = PlaceholderImageGenerator.image(for: obra, size: imageSize)
+        // Tenta carregar a imagem real do Asset Catalog; cai para placeholder se não existir.
+        if let imagem = UIImage(named: obra.imagemNome) {
+            imagemView.image = imagem
+        } else {
+            let imageSize = CGSize(width: 300, height: 300)
+            imagemView.image = PlaceholderImageGenerator.image(for: obra, size: imageSize)
+        }
     }
 }

@@ -116,8 +116,13 @@ final class DetalheObraViewController: UIViewController {
     }
 
     private func configurar() {
-        let size = CGSize(width: 600, height: 600)
-        imagemView.image = PlaceholderImageGenerator.image(for: obra, size: size)
+        // Tenta carregar a imagem real do Asset Catalog; cai para placeholder se não existir.
+        if let imagem = UIImage(named: obra.imagemNome) {
+            imagemView.image = imagem
+        } else {
+            let size = CGSize(width: 600, height: 600)
+            imagemView.image = PlaceholderImageGenerator.image(for: obra, size: size)
+        }
         tituloLabel.text = obra.titulo
         artistaLabel.text = obra.artista
         metadadosLabel.text = "\(obra.estilo) • \(obra.ano)"

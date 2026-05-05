@@ -35,7 +35,7 @@ A camada `Data` foi separada do Model para manter o struct livre de dependência
 
 - **View Code (programático)** em vez de Storyboards: mantém versionamento amigável (sem merges em XML), favorece reuso e segue a tendência atual da comunidade iOS.
 - **Grid responsiva**: 2 colunas em iPhone (compact) e 3 em iPad (regular), calculadas em runtime via `traitCollection.horizontalSizeClass`. Recalcula em rotação via `viewWillTransition`.
-- **Placeholders gerados em código** (`PlaceholderImageGenerator`): gradientes coloridos derivados do estilo + SF Symbol central. Sem problemas de copyright e sem peso no bundle. Para usar fotos reais basta trocar `imagemView.image = UIImage(named: obra.imagemNome)`.
+- **Imagens originais por obra** em `Assets.xcassets`: cada uma das 8 obras tem seu próprio imageset (`obra_apostolo_cataratas`, `obra_pinheirais`, …) com versões @1x/@2x/@3x. As ilustrações foram geradas proceduralmente em Python/Pillow para evocar cada obra (cenas distintas + paleta por estilo) — sem riscos de copyright e adequado a contexto acadêmico. Caso o asset não seja encontrado em runtime, há *fallback* para o `PlaceholderImageGenerator` (gradiente + SF Symbol).
 - **Busca embutida na navigation bar** (`UISearchController`) em vez de uma `UISearchBar` solta no header — segue o padrão de apps nativos (Mail, Notes).
 - **Animação sutil ao tocar na célula**: `scaleEffect(0.94)` + retorno antes do push, dá feedback tátil sem distrair.
 - **Tela de detalhes em `UIScrollView`** com layout em `UIStackView` vertical: adapta a textos de descrição de qualquer tamanho.
