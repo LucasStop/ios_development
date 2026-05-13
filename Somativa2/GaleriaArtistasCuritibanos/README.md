@@ -7,7 +7,7 @@ App iOS em UIKit que apresenta uma galeria interativa de obras de artistas com f
 ## Componentes do grupo
 
 - Lucas Stopinski da Silva
-- *(adicione os demais integrantes)*
+- Lucas Bruno e Silva
 
 ## Como rodar
 
@@ -35,7 +35,7 @@ A camada `Data` foi separada do Model para manter o struct livre de dependência
 
 - **View Code (programático)** em vez de Storyboards: mantém versionamento amigável (sem merges em XML), favorece reuso e segue a tendência atual da comunidade iOS.
 - **Grid responsiva**: 2 colunas em iPhone (compact) e 3 em iPad (regular), calculadas em runtime via `traitCollection.horizontalSizeClass`. Recalcula em rotação via `viewWillTransition`.
-- **Imagens originais por obra** em `Assets.xcassets`: cada uma das 8 obras tem seu próprio imageset (`obra_apostolo_cataratas`, `obra_pinheirais`, …) com versões @1x/@2x/@3x. As ilustrações foram geradas proceduralmente em Python/Pillow para evocar cada obra (cenas distintas + paleta por estilo) — sem riscos de copyright e adequado a contexto acadêmico. Caso o asset não seja encontrado em runtime, há *fallback* para o `PlaceholderImageGenerator` (gradiente + SF Symbol).
+- **Imagens originais por obra** em `Assets.xcassets`: cada uma das 8 obras tem seu próprio imageset com nome único (`poty_apostolo`, `debona_pinheirais`, `bakun_aldeia`, `wong_esfera`, `loio_persio_sertao`, `andersen_autorretrato`, `turin_tigre`, `viaro_caboclos`). As imagens foram coletadas de fontes públicas para fins didáticos (uso acadêmico não comercial). Caso o asset não seja encontrado em runtime, há *fallback* automático para o `PlaceholderImageGenerator`, que desenha um gradiente colorido derivado do estilo da obra com um SF Symbol central — evita crash e mantém o app utilizável mesmo se algum recurso faltar.
 - **Busca embutida na navigation bar** (`UISearchController`) em vez de uma `UISearchBar` solta no header — segue o padrão de apps nativos (Mail, Notes).
 - **Animação sutil ao tocar na célula**: `scaleEffect(0.94)` + retorno antes do push, dá feedback tátil sem distrair.
 - **Tela de detalhes em `UIScrollView`** com layout em `UIStackView` vertical: adapta a textos de descrição de qualquer tamanho.
@@ -74,11 +74,14 @@ A camada `Data` foi separada do Model para manter o struct livre de dependência
 
 ## Dificuldades encontradas
 
-*(template para a apresentação — preencher com a experiência real)*
-
 - **Cálculo de tamanho responsivo de células**: o `UICollectionViewFlowLayout` não oferece suporte direto a "X colunas", então foi necessário implementar `sizeForItemAt` calculando a partir da largura disponível, descontando insets e espaçamento.
-- **Geração de placeholders**: ao invés de bundlar imagens, optamos por desenhar gradientes em runtime via `UIGraphicsImageRenderer`. Isso exigiu cuidado com o `CGContext` e o cálculo do ângulo do gradiente.
-- **Compartilhamento no iPad**: sem configurar `popoverPresentationController.barButtonItem`, o `UIActivityViewController` crashava com NSInvalidArgumentException — descoberto e corrigido.
+- **Fallback de imagens**: como nem todas as obras teriam imagens disponíveis durante o desenvolvimento, criamos o `PlaceholderImageGenerator` que desenha gradientes em runtime via `UIGraphicsImageRenderer`. Hoje todas as obras têm imagem real, mas o fallback continua ativo como rede de segurança.
+- **Compartilhamento no iPad**: sem configurar `popoverPresentationController.barButtonItem`, o `UIActivityViewController` crashava com `NSInvalidArgumentException` — descoberto e corrigido.
+- **Diferentes proporções de imagem**: como as imagens vieram de fontes diversas (verticais, horizontais, quadradas), o `contentMode = .scaleAspectFill` + `clipsToBounds` garante que a célula quadrada sempre exiba a região central da imagem sem distorção.
+
+## Roteiro do vídeo
+
+O roteiro detalhado da apresentação está em [`ROTEIRO_APRESENTACAO.md`](ROTEIRO_APRESENTACAO.md), com divisão de falas entre Lucas Stopinski e Lucas Bruno, timestamps e o que mostrar em cada momento.
 
 ## Vídeo de apresentação
 
