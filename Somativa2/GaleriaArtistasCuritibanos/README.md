@@ -4,6 +4,11 @@ Projeto da disciplina **Mobile Development iOS — PUCPR (2026)** — Avaliaçã
 
 App iOS em UIKit que apresenta uma galeria interativa de obras de artistas com forte ligação à cidade de Curitiba.
 
+## Links da entrega
+
+- **Vídeo de apresentação (YouTube — Não Listado):** https://youtu.be/DKNC0E1K8Rk
+- **Repositório do projeto:** https://github.com/LucasStop/ios_development/tree/main/Somativa2/GaleriaArtistasCuritibanos
+
 ## Componentes do grupo
 
 - Lucas Stopinski da Silva
@@ -85,4 +90,6 @@ O roteiro detalhado da apresentação está em [`ROTEIRO_APRESENTACAO.md`](ROTEI
 
 ## Vídeo de apresentação
 
-*(adicionar link do YouTube — não listado, 10–20min)*
+[**Assista no YouTube (Não Listado)**](https://youtu.be/DKNC0E1K8Rk)
+
+Demonstração completa do app rodando no simulador e walkthrough técnico do código por Lucas Stopinski e Lucas Bruno.
