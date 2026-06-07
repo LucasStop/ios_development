@@ -49,3 +49,19 @@ targets:
         SWIFT_VERSION: "5.0"
         GENERATE_INFOPLIST_FILE: YES
         TEST_TARGET_NAME: VitrineLargoOrdem
+
+  VitrineLargoOrdemTests:
+    type: bundle.unit-test
+    platform: iOS
+    sources:
+      - path: VitrineLargoOrdemTests
+    dependencies:
+      - target: VitrineLargoOrdem
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: br.pucpr.lucasstopinski.VitrineLargoOrdemTests
+        TARGETED_DEVICE_FAMILY: "1,2"
+        SWIFT_VERSION: "5.0"
+        GENERATE_INFOPLIST_FILE: YES
+        TEST_HOST: "$(BUILT_PRODUCTS_DIR)/VitrineLargoOrdem.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/VitrineLargoOrdem"
+        BUNDLE_LOADER: "$(TEST_HOST)"
