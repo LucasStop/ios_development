@@ -1,0 +1,109 @@
+name: iOS CI
+
+on:
+  push:
+    branches:
+      - main
+      - 'feature/**'
+  pull_request:
+    branches:
+      - main
+      - 'feature/**'
+  workflow_dispatch:
+
+# Cancela runs antigas da mesma branch/PR ao receber um novo push.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build-and-test:
+    name: Build + Unit Tests + UI Tests
+    runs-on: macos-15
+
+    env:
+      PROJECT_DIR: Somativa3/VitrineLargoOrdem
+      SCHEME: VitrineLargoOrdem
+      DESTINATION: 'platform=iOS Simulator,name=iPhone 17,OS=latest'
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Selecionar Xcode
+        run: sudo xcode-select -switch /Applications/Xcode_16.4.app/Contents/Developer
+        continue-on-error: true
+
+      - name: Mostrar versão do Xcode
+        run: xcodebuild -version
+
+      - name: Cachear DerivedData
+        uses: actions/cache@v4
+        with:
+          path: ~/Library/Developer/Xcode/DerivedData
+          key: derived-data-${{ runner.os }}-${{ hashFiles(format('{0}/**/*.swift', env.PROJECT_DIR), format('{0}/project.yml', env.PROJECT_DIR)) }}
+          restore-keys: |
+            derived-data-${{ runner.os }}-
+
+      - name: Instalar xcodegen
+        run: brew install xcodegen
+
+      - name: Gerar projeto Xcode
+        working-directory: ${{ env.PROJECT_DIR }}
+        run: xcodegen generate
+
+      - name: Build
+        working-directory: ${{ env.PROJECT_DIR }}
+        run: |
+          set -o pipefail
+          xcodebuild build \
+            -project ${{ env.SCHEME }}.xcodeproj \
+            -scheme ${{ env.SCHEME }} \
+            -destination "${{ env.DESTINATION }}" \
+            -configuration Debug \
+            CODE_SIGNING_ALLOWED=NO
+
+      - name: Rodar testes unitários (Swift Testing)
+        working-directory: ${{ env.PROJECT_DIR }}
+        run: |
+          set -o pipefail
+          xcodebuild test \
+            -project ${{ env.SCHEME }}.xcodeproj \
+            -scheme ${{ env.SCHEME }} \
+            -destination "${{ env.DESTINATION }}" \
+            -only-testing:VitrineLargoOrdemTests \
+            CODE_SIGNING_ALLOWED=NO
+
+      - name: Rodar UI Tests (acessibilidade)
+        working-directory: ${{ env.PROJECT_DIR }}
+        run: |
+          set -o pipefail
+          xcodebuild test \
+            -project ${{ env.SCHEME }}.xcodeproj \
+            -scheme ${{ env.SCHEME }} \
+            -destination "${{ env.DESTINATION }}" \
+            -only-testing:VitrineLargoOrdemUITests \
+            -resultBundlePath UITestResults.xcresult \
+            CODE_SIGNING_ALLOWED=NO
+
+      - name: Subir resultado dos UI Tests (em falhas)
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: UITestResults-${{ github.run_id }}
+          path: ${{ env.PROJECT_DIR }}/UITestResults.xcresult
+          retention-days: 7
+
+  lint:
+    name: SwiftLint
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Rodar SwiftLint
+        uses: norio-nomura/action-swiftlint@3.2.1
+        with:
+          args: --strict --config Somativa3/VitrineLargoOrdem/.swiftlint.yml
+        continue-on-error: true  # Inicia tolerante; tightening em PRs futuros.

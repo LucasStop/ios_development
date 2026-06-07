@@ -1,0 +1,62 @@
+# Configuração SwiftLint da Vitrine Largo da Ordem.
+#
+# Filosofia: linter como guarda-corpo, não como tortura. Começamos
+# tolerantes e apertamos as regras quando o time amadurece.
+
+# Onde procurar
+included:
+  - VitrineLargoOrdem
+  - VitrineLargoOrdemTests
+  - VitrineLargoOrdemUITests
+
+excluded:
+  - VitrineLargoOrdem.xcodeproj
+  - VitrineLargoOrdem/Assets.xcassets
+  - VitrineLargoOrdem/Preview Content
+  - DerivedData
+  - .build
+
+# Regras desabilitadas (justificativa explícita por cada uma)
+disabled_rules:
+  - todo                       # TODO em código MVP é normal — vamos rever em V1.
+  - line_length                # SwiftUI tende a linhas longas; configuramos abaixo se ficar abusivo.
+  - trailing_whitespace        # Editor cuida disso.
+  - identifier_name            # Permite "id", "vm" etc. comuns em SwiftUI.
+  - type_body_length           # ViewModels e Views podem crescer; refactor sob demanda.
+  - file_length                # Idem.
+
+# Regras opt-in que queremos ativadas
+opt_in_rules:
+  - empty_count                  # use isEmpty em vez de .count == 0
+  - explicit_init                # evita .init() implicito
+  - first_where                  # .first(where:) em vez de .filter().first
+  - sorted_first_last            # idem
+  - contains_over_first_not_nil
+  - operator_usage_whitespace
+  - closure_spacing
+  - vertical_whitespace_closing_braces
+  - empty_string
+  - last_where
+
+# Configurações de regras específicas
+line_length:
+  warning: 140
+  error: 200
+  ignores_comments: true
+  ignores_urls: true
+
+function_body_length:
+  warning: 80
+  error: 150
+
+cyclomatic_complexity:
+  warning: 15
+  error: 25
+
+nesting:
+  type_level:
+    warning: 3
+  function_level:
+    warning: 3
+
+reporter: "xcode"

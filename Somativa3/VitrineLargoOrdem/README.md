@@ -140,6 +140,15 @@ O plano técnico-estratégico para transformar este projeto somativo em um marke
 - Top 5 riscos com mitigação
 - 5 próximos passos imediatos
 
+## CI/CD
+
+O projeto tem CI rodando via GitHub Actions em todo push e PR para `main` e branches `feature/**`:
+
+- **build-and-test** (macOS): xcodegen → build → 32 testes unitários (Swift Testing) → 10 UI Tests (XCUITest)
+- **lint** (Ubuntu): SwiftLint com `.swiftlint.yml` do projeto
+
+Detalhes em [`.github/workflows/README.md`](../../.github/workflows/README.md). Configuração no [`ios.yml`](../../.github/workflows/ios.yml).
+
 ## Testes automatizados de acessibilidade
 
 O target `VitrineLargoOrdemUITests` tem **10 testes XCUITest** que validam todos os requisitos de A11y do enunciado:
