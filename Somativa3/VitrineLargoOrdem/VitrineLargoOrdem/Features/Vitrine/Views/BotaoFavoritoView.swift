@@ -9,9 +9,9 @@ struct BotaoFavoritoView: View {
         Button(action: acao) {
             Image(systemName: isFavorito ? "heart.fill" : "heart")
                 .font(.title2)
-                .foregroundStyle(isFavorito ? .red : .secondary)
+                .foregroundStyle(isFavorito ? DSColor.favoriteActive : DSColor.favoriteInactive)
                 .symbolEffect(.bounce, value: isFavorito)
-                .frame(minWidth: 44, minHeight: 44)
+                .frame(minWidth: DSSpacing.touchTargetMin, minHeight: DSSpacing.touchTargetMin)
                 .contentShape(Rectangle())
         }
         .buttonStyle(.borderless)

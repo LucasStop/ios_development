@@ -1,20 +1,21 @@
 import SwiftUI
 
 struct VitrineView: View {
-    @StateObject private var viewModel = VitrineViewModel()
+    @StateObject var viewModel: VitrineViewModel
 
     private let colunas = [GridItem(.adaptive(minimum: 150), spacing: 16)]
 
     var body: some View {
         NavigationStack {
             ScrollView {
-                LazyVGrid(columns: colunas, spacing: 16) {
+                LazyVGrid(columns: colunas, spacing: DSSpacing.md) {
                     ForEach(viewModel.produtosFiltrados) { produto in
                         NavigationLink {
                             DetalhesProdutoView(produtoId: produto.id, viewModel: viewModel)
                         } label: {
                             ProdutoCardView(
                                 produto: produto,
+                                isFavorito: viewModel.isFavorito(produto),
                                 aoFavoritar: { viewModel.alternarFavorito(do: produto) }
                             )
                         }
@@ -22,9 +23,9 @@ struct VitrineView: View {
                         .accessibilityHint("Abre a tela de detalhes da peça.")
                     }
                 }
-                .padding(16)
+                .padding(DSSpacing.md)
             }
-            .background(Color(.systemGroupedBackground))
+            .background(DSColor.groupedBackground)
             .navigationTitle("Feira do Largo")
             .navigationBarTitleDisplayMode(.large)
             .searchable(
@@ -48,8 +49,4 @@ struct VitrineView: View {
         }
         .accessibilityElement(children: .combine)
     }
-}
-
-#Preview {
-    VitrineView()
 }
