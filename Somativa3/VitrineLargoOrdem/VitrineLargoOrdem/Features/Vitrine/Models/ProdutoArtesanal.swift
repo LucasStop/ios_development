@@ -30,23 +30,11 @@ struct ProdutoArtesanal: Identifiable, Hashable {
         self.isFavorito = isFavorito
     }
 
-    private static let precoFormatter: NumberFormatter = {
-        let formatter = NumberFormatter()
-        formatter.numberStyle = .currency
-        formatter.locale = Locale(identifier: "pt_BR")
-        return formatter
-    }()
-
     var precoFormatado: String {
-        Self.precoFormatter.string(from: NSNumber(value: preco)) ?? "R$ \(preco)"
+        PrecoFormatter.formatado(preco)
     }
 
     var precoAcessivel: String {
-        let inteiro = Int(preco)
-        let centavos = Int((preco - Double(inteiro)) * 100)
-        if centavos == 0 {
-            return "Preço: \(inteiro) reais"
-        }
-        return "Preço: \(inteiro) reais e \(centavos) centavos"
+        PrecoFormatter.acessivel(preco)
     }
 }
