@@ -62,6 +62,18 @@ struct DetalhesProdutoView: View {
                     acao: { viewModel.alternarFavorito(do: produto) }
                 )
             }
+            ToolbarItem(placement: .topBarTrailing) {
+                ShareLink(
+                    item: textoCompartilhamento(produto),
+                    subject: Text(produto.nome),
+                    message: Text("Confira esta peça da Feira do Largo da Ordem.")
+                ) {
+                    Image(systemName: "square.and.arrow.up")
+                        .frame(minWidth: DSSpacing.touchTargetMin, minHeight: DSSpacing.touchTargetMin)
+                }
+                .accessibilityLabel("Compartilhar \(produto.nome)")
+                .accessibilityHint("Abre as opcoes para compartilhar este produto.")
+            }
         }
         .alert("Contato enviado", isPresented: $mostrandoConfirmacaoContato) {
             Button("OK", role: .cancel) {}
@@ -170,6 +182,17 @@ struct DetalhesProdutoView: View {
         .accessibilityHint(produto.temEstoque
                            ? "Adiciona uma unidade de \(produto.nome) ao carrinho."
                            : "Produto esgotado.")
+    }
+
+    private func textoCompartilhamento(_ produto: Produto) -> String {
+        """
+        \(produto.nome) — por \(produto.artesao)
+        \(produto.precoFormatado) · \(produto.categoria)
+
+        \(produto.descricao)
+
+        Encontrado na Vitrine da Feira do Largo da Ordem.
+        """
     }
 
     private func botaoContato(produto: Produto) -> some View {
