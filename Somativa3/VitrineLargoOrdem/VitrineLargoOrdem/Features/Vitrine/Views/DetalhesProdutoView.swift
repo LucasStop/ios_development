@@ -3,8 +3,10 @@ import SwiftUI
 struct DetalhesProdutoView: View {
     let produtoId: UUID
     @ObservedObject var viewModel: VitrineViewModel
+    @ObservedObject var carrinhoViewModel: CarrinhoViewModel
 
     @State private var mostrandoConfirmacaoContato = false
+    @State private var mostrandoToastCarrinho = false
 
     @ScaledMetric(relativeTo: .body) private var alturaImagem: CGFloat = 240
 
@@ -41,6 +43,9 @@ struct DetalhesProdutoView: View {
                 descricao(produto: produto)
                     .accessibilitySortPriority(6)
 
+                botaoAdicionarCarrinho(produto: produto)
+                    .accessibilitySortPriority(7)
+
                 botaoContato(produto: produto)
                     .accessibilitySortPriority(4)
             }
@@ -62,6 +67,11 @@ struct DetalhesProdutoView: View {
             Button("OK", role: .cancel) {}
         } message: {
             Text("\(produto.artesao) receberá sua mensagem em breve.")
+        }
+        .alert("Adicionado ao carrinho", isPresented: $mostrandoToastCarrinho) {
+            Button("OK", role: .cancel) {}
+        } message: {
+            Text("\(produto.nome) foi adicionado ao seu carrinho.")
         }
     }
 
@@ -91,6 +101,9 @@ struct DetalhesProdutoView: View {
             metadadoLinha(rotulo: "Artesão", valor: produto.artesao)
             Divider()
             metadadoLinha(rotulo: "Categoria", valor: produto.categoria)
+            Divider()
+            metadadoLinha(rotulo: "Disponibilidade",
+                          valor: produto.temEstoque ? "\(produto.estoque) disponíveis" : "Esgotado")
             Divider()
             HStack(alignment: .firstTextBaseline) {
                 Text("Preço")
@@ -142,6 +155,23 @@ struct DetalhesProdutoView: View {
         .clipShape(RoundedRectangle(cornerRadius: DSSpacing.cornerLg, style: .continuous))
     }
 
+    private func botaoAdicionarCarrinho(produto: Produto) -> some View {
+        Button {
+            carrinhoViewModel.adicionar(produto: produto)
+            mostrandoToastCarrinho = true
+        } label: {
+            Label("Adicionar ao carrinho", systemImage: "cart.badge.plus")
+                .font(DSFont.buttonLabel)
+                .frame(maxWidth: .infinity, minHeight: 50)
+        }
+        .buttonStyle(.borderedProminent)
+        .tint(DSColor.primary)
+        .disabled(!produto.temEstoque)
+        .accessibilityHint(produto.temEstoque
+                           ? "Adiciona uma unidade de \(produto.nome) ao carrinho."
+                           : "Produto esgotado.")
+    }
+
     private func botaoContato(produto: Produto) -> some View {
         Button {
             mostrandoConfirmacaoContato = true
@@ -150,7 +180,7 @@ struct DetalhesProdutoView: View {
                 .font(DSFont.buttonLabel)
                 .frame(maxWidth: .infinity, minHeight: 50)
         }
-        .buttonStyle(.borderedProminent)
+        .buttonStyle(.bordered)
         .tint(DSColor.primary)
         .accessibilityHint("Abre uma confirmação para contatar \(produto.artesao).")
     }

@@ -1,7 +1,8 @@
 import SwiftUI
 
 struct VitrineView: View {
-    @StateObject var viewModel: VitrineViewModel
+    @ObservedObject var viewModel: VitrineViewModel
+    @ObservedObject var carrinhoViewModel: CarrinhoViewModel
 
     private let colunas = [GridItem(.adaptive(minimum: 150), spacing: 16)]
 
@@ -11,7 +12,11 @@ struct VitrineView: View {
                 LazyVGrid(columns: colunas, spacing: DSSpacing.md) {
                     ForEach(viewModel.produtosFiltrados) { produto in
                         NavigationLink {
-                            DetalhesProdutoView(produtoId: produto.id, viewModel: viewModel)
+                            DetalhesProdutoView(
+                                produtoId: produto.id,
+                                viewModel: viewModel,
+                                carrinhoViewModel: carrinhoViewModel
+                            )
                         } label: {
                             ProdutoCardView(
                                 produto: produto,
@@ -39,6 +44,7 @@ struct VitrineView: View {
                 }
             }
         }
+        .onAppear { viewModel.recarregar() }
     }
 
     private var estadoVazio: some View {

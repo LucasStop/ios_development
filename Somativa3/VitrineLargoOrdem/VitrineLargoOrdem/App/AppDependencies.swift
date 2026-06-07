@@ -13,17 +13,34 @@ final class AppDependencies: ObservableObject {
     let modelContainer: ModelContainer
     let productRepository: ProductRepository
     let favoriteRepository: FavoriteRepository
+    let cartRepository: CartRepository
 
-    init(modelContainer: ModelContainer = PersistenceController.shared) {
+    init(modelContainer: ModelContainer) {
         self.modelContainer = modelContainer
         let context = modelContainer.mainContext
         self.productRepository = LocalProductRepository(context: context)
         self.favoriteRepository = LocalFavoriteRepository(context: context)
+        self.cartRepository = LocalCartRepository(context: context)
     }
 
-    /// Factory para a VitrineViewModel — encapsula a injeção dos dois repositories.
+    /// Inicializador padrão usado pelo App — usa o container persistente compartilhado.
+    convenience init() {
+        self.init(modelContainer: PersistenceController.shared)
+    }
+
     func makeVitrineViewModel() -> VitrineViewModel {
         VitrineViewModel(
+            productRepository: productRepository,
+            favoriteRepository: favoriteRepository
+        )
+    }
+
+    func makeCarrinhoViewModel() -> CarrinhoViewModel {
+        CarrinhoViewModel(cartRepository: cartRepository)
+    }
+
+    func makeFavoritosViewModel() -> FavoritosViewModel {
+        FavoritosViewModel(
             productRepository: productRepository,
             favoriteRepository: favoriteRepository
         )

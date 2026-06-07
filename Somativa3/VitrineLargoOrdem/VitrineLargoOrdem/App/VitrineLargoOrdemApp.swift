@@ -8,7 +8,7 @@ struct VitrineLargoOrdemApp: App {
 
     var body: some Scene {
         WindowGroup {
-            VitrineView(viewModel: dependencies.makeVitrineViewModel())
+            RootTabView(dependencies: dependencies)
                 .modelContainer(dependencies.modelContainer)
                 .environmentObject(dependencies)
         }
