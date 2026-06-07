@@ -34,3 +34,18 @@ targets:
         GENERATE_INFOPLIST_FILE: NO
         DEVELOPMENT_ASSET_PATHS: "\"VitrineLargoOrdem/Preview Content\""
         ENABLE_PREVIEWS: YES
+
+  VitrineLargoOrdemUITests:
+    type: bundle.ui-testing
+    platform: iOS
+    sources:
+      - path: VitrineLargoOrdemUITests
+    dependencies:
+      - target: VitrineLargoOrdem
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: br.pucpr.lucasstopinski.VitrineLargoOrdemUITests
+        TARGETED_DEVICE_FAMILY: "1,2"
+        SWIFT_VERSION: "5.0"
+        GENERATE_INFOPLIST_FILE: YES
+        TEST_TARGET_NAME: VitrineLargoOrdem

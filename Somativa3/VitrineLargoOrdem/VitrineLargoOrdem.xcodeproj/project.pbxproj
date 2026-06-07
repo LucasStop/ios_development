@@ -10,6 +10,7 @@
 		12A0E1F5E151E5A28C144C7B /* DetalhesProdutoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0614FA1AA20E1A23D091C24B /* DetalhesProdutoView.swift */; };
 		14A45924AECFBF1D3DAF453C /* ProdutoCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 752FDCC34E2FC2F8B61B6502 /* ProdutoCardView.swift */; };
 		181076F01A1B375D86F971C3 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B7AA0D1D5A29AAD264407C03 /* Preview Assets.xcassets */; };
+		1B258C1C82024CBA4CA2E7BB /* AcessibilidadeUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C4391555292AE4BC0CC5419 /* AcessibilidadeUITests.swift */; };
 		5612DBA3FF7D30958074ED6B /* VitrineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3932CF8CFE80D552D4C7A12F /* VitrineView.swift */; };
 		5C59139C4A540A1763E2F605 /* VitrineLargoOrdemApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8432F123536346BBC97E343 /* VitrineLargoOrdemApp.swift */; };
 		84B7225D52270BB34E8C6CCA /* BotaoFavoritoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96C0A6338D9B425DCF32C2F4 /* BotaoFavoritoView.swift */; };
@@ -19,10 +20,22 @@
 		E2502F382842C652F3764461 /* ProdutosMockData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C36EE57E9B314BBCC040FF14 /* ProdutosMockData.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		CC138629B03EA5341F5D817C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 6DD03BB4B48199FCA0EC323F /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = A2453CB1437542E900D80138;
+			remoteInfo = VitrineLargoOrdem;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
 		0614FA1AA20E1A23D091C24B /* DetalhesProdutoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetalhesProdutoView.swift; sourceTree = "<group>"; };
 		28A26795B9B2606A2DF5BF9F /* VitrineViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VitrineViewModel.swift; sourceTree = "<group>"; };
 		3932CF8CFE80D552D4C7A12F /* VitrineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VitrineView.swift; sourceTree = "<group>"; };
+		39361A6E0C51F7C66DA59B31 /* VitrineLargoOrdemUITests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = VitrineLargoOrdemUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		5C4391555292AE4BC0CC5419 /* AcessibilidadeUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcessibilidadeUITests.swift; sourceTree = "<group>"; };
 		6D3D7487B5C7574B96C2FE04 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		752FDCC34E2FC2F8B61B6502 /* ProdutoCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProdutoCardView.swift; sourceTree = "<group>"; };
 		96C0A6338D9B425DCF32C2F4 /* BotaoFavoritoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BotaoFavoritoView.swift; sourceTree = "<group>"; };
@@ -39,6 +52,7 @@
 			isa = PBXGroup;
 			children = (
 				DAF7A06336E3C0E94CA4BBB9 /* VitrineLargoOrdem.app */,
+				39361A6E0C51F7C66DA59B31 /* VitrineLargoOrdemUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -51,10 +65,19 @@
 			path = ViewModels;
 			sourceTree = "<group>";
 		};
+		549DB0B219745A3D18A6C135 /* VitrineLargoOrdemUITests */ = {
+			isa = PBXGroup;
+			children = (
+				5C4391555292AE4BC0CC5419 /* AcessibilidadeUITests.swift */,
+			);
+			path = VitrineLargoOrdemUITests;
+			sourceTree = "<group>";
+		};
 		6E65B294FF209D9432840B5C = {
 			isa = PBXGroup;
 			children = (
 				8FD504CCFA13EFA3CF360586 /* VitrineLargoOrdem */,
+				549DB0B219745A3D18A6C135 /* VitrineLargoOrdemUITests */,
 				0F38B6A924A14AA0B3B23177 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -130,6 +153,24 @@
 			productReference = DAF7A06336E3C0E94CA4BBB9 /* VitrineLargoOrdem.app */;
 			productType = "com.apple.product-type.application";
 		};
+		BF4CC3D74C13DE26A531B032 /* VitrineLargoOrdemUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 43A04048CDFE606EA52AF248 /* Build configuration list for PBXNativeTarget "VitrineLargoOrdemUITests" */;
+			buildPhases = (
+				935D8944C15BFCA9C1ACEF77 /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				18817D990242364499D3607D /* PBXTargetDependency */,
+			);
+			name = VitrineLargoOrdemUITests;
+			packageProductDependencies = (
+			);
+			productName = VitrineLargoOrdemUITests;
+			productReference = 39361A6E0C51F7C66DA59B31 /* VitrineLargoOrdemUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -139,6 +180,9 @@
 				BuildIndependentTargetsInParallel = YES;
 				LastUpgradeCheck = 1430;
 				TargetAttributes = {
+					BF4CC3D74C13DE26A531B032 = {
+						TestTargetID = A2453CB1437542E900D80138;
+					};
 				};
 			};
 			buildConfigurationList = 06F3184B18A00ACCAA415B15 /* Build configuration list for PBXProject "VitrineLargoOrdem" */;
@@ -156,6 +200,7 @@
 			projectRoot = "";
 			targets = (
 				A2453CB1437542E900D80138 /* VitrineLargoOrdem */,
+				BF4CC3D74C13DE26A531B032 /* VitrineLargoOrdemUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -173,6 +218,14 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		935D8944C15BFCA9C1ACEF77 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1B258C1C82024CBA4CA2E7BB /* AcessibilidadeUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		F183016BC94EE5806A1F1175 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -189,6 +242,14 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		18817D990242364499D3607D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = A2453CB1437542E900D80138 /* VitrineLargoOrdem */;
+			targetProxy = CC138629B03EA5341F5D817C /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		38CDA4BFD62DF151BDDF5863 /* Release */ = {
@@ -350,6 +411,42 @@
 			};
 			name = Debug;
 		};
+		6622F0B1AC2A5D13920AAAC3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = br.pucpr.lucasstopinski.VitrineLargoOrdemUITests;
+				SDKROOT = iphoneos;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = VitrineLargoOrdem;
+			};
+			name = Release;
+		};
+		8FFF8E78D484518D02DA6F00 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = br.pucpr.lucasstopinski.VitrineLargoOrdemUITests;
+				SDKROOT = iphoneos;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = VitrineLargoOrdem;
+			};
+			name = Debug;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -358,6 +455,15 @@
 			buildConfigurations = (
 				49AB4F0BD8DCEB2658B6BC4B /* Debug */,
 				50554095EF977BA6FC3F7CFB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		43A04048CDFE606EA52AF248 /* Build configuration list for PBXNativeTarget "VitrineLargoOrdemUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8FFF8E78D484518D02DA6F00 /* Debug */,
+				6622F0B1AC2A5D13920AAAC3 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
