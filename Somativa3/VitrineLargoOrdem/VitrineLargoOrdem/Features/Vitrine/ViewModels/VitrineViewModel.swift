@@ -10,8 +10,10 @@ import SwiftData
 final class VitrineViewModel: ObservableObject {
 
     @Published var termoBusca: String = ""
+    @Published var categoriaSelecionada: String? = nil
     @Published private(set) var produtos: [Produto] = []
     @Published private(set) var idsFavoritados: Set<UUID> = []
+    @Published private(set) var carregando: Bool = true
 
     private let productRepository: ProductRepository
     private let favoriteRepository: FavoriteRepository
@@ -25,18 +27,39 @@ final class VitrineViewModel: ObservableObject {
         recarregar()
     }
 
+    /// Lista única, alfabética, de categorias presentes no catálogo atual.
+    var categoriasDisponiveis: [String] {
+        Array(Set(produtos.map(\.categoria))).sorted()
+    }
+
     var produtosFiltrados: [Produto] {
         let termo = termoBusca.trimmingCharacters(in: .whitespacesAndNewlines)
-        guard !termo.isEmpty else { return produtos }
-        return produtos.filter {
-            $0.nome.localizedCaseInsensitiveContains(termo) ||
-            $0.categoria.localizedCaseInsensitiveContains(termo)
+        var resultado = produtos
+
+        if let categoria = categoriaSelecionada {
+            resultado = resultado.filter { $0.categoria == categoria }
         }
+
+        if !termo.isEmpty {
+            resultado = resultado.filter {
+                $0.nome.localizedCaseInsensitiveContains(termo) ||
+                $0.categoria.localizedCaseInsensitiveContains(termo)
+            }
+        }
+
+        return resultado
     }
 
     func recarregar() {
+        carregando = true
         produtos = (try? productRepository.todos()) ?? []
         idsFavoritados = favoriteRepository.todos()
+        carregando = false
+    }
+
+    func limparFiltros() {
+        categoriaSelecionada = nil
+        termoBusca = ""
     }
 
     func produto(comId id: UUID) -> Produto? {
