@@ -129,6 +129,31 @@ VitrineLargoOrdem/
 
 O roteiro detalhado da apresentação está em [`ROTEIRO_APRESENTACAO.md`](ROTEIRO_APRESENTACAO.md), com divisão de falas entre Lucas Stopinski e Lucas Bruno, timestamps, o que mostrar em cada momento e demos específicos de acessibilidade (VoiceOver + Dynamic Type).
 
+## Evolução para e-commerce completo
+
+O plano técnico-estratégico para transformar este projeto somativo em um marketplace funcional está em [`PLANO_ECOMMERCE.md`](PLANO_ECOMMERCE.md) (também em PDF: [`Plano_Evolucao_Ecommerce.pdf`](Plano_Evolucao_Ecommerce.pdf)). O documento foi construído a partir de brainstorm em 5 domínios (71 features mapeadas) seguido de crítica arquitetural e síntese executável, contendo:
+
+- 6 princípios norteadores
+- 14 decisões técnicas estratégicas com justificativa (Supabase, SwiftData, Mercado Pago, Nuke, Sentry, etc.)
+- Roadmap em 4 fases (MVP / V1 / V2 / V3) com tabelas detalhadas por feature
+- Mudanças de arquitetura no código atual (estrutura de pastas, refactors)
+- Top 5 riscos com mitigação
+- 5 próximos passos imediatos
+
+## Testes automatizados de acessibilidade
+
+O target `VitrineLargoOrdemUITests` tem **10 testes XCUITest** que validam todos os requisitos de A11y do enunciado:
+
+- Labels descritivos nas imagens (não genéricos)
+- Preço lido como "Preço: 85 reais" (não "R cifrão")
+- Touch target ≥ 44×44 no botão favoritar
+- Navegação para tela de detalhes
+- **Tap no favoritar NÃO dispara navegação** (validação do fix `.borderless` + `@ObservedObject`)
+- Busca por nome e por categoria
+- `ContentUnavailableView` quando busca não retorna nada
+
+Rodar: `xcodebuild test -project VitrineLargoOrdem.xcodeproj -scheme VitrineLargoOrdem -destination 'platform=iOS Simulator,name=iPhone 17' -only-testing:VitrineLargoOrdemUITests`
+
 ## Vídeo de apresentação
 
 *(adicionar link do YouTube — não listado, 10–20min)*
