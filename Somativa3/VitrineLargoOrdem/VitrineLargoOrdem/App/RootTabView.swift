@@ -69,6 +69,14 @@ struct RootTabView: View {
                 Label("Perfil", systemImage: "person.fill")
             }
             .accessibilityLabel("Aba Perfil")
+
+            if authViewModel.usuarioAtual?.ehAdmin == true {
+                AdminPedidosView(viewModel: dependencies.makeAdminPedidosViewModel())
+                    .tabItem {
+                        Label("Admin", systemImage: "person.badge.shield.checkmark.fill")
+                    }
+                    .accessibilityLabel("Aba Painel Administrativo")
+            }
         }
         .tint(DSColor.primary)
     }

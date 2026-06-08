@@ -12,6 +12,7 @@ final class Usuario {
     var email: String
     var nome: String
     var provedor: String // "apple", "email", "convidado"
+    var role: String     // "usuario" | "admin"
     var criadoEm: Date
     var avatarData: Data?
 
@@ -20,6 +21,7 @@ final class Usuario {
         email: String,
         nome: String,
         provedor: String,
+        role: RoleUsuario = .usuario,
         criadoEm: Date = .now,
         avatarData: Data? = nil
     ) {
@@ -27,6 +29,7 @@ final class Usuario {
         self.email = email
         self.nome = nome
         self.provedor = provedor
+        self.role = role.rawValue
         self.criadoEm = criadoEm
         self.avatarData = avatarData
     }
@@ -37,6 +40,37 @@ final class Usuario {
         let primeira = partes.first?.prefix(1) ?? ""
         let ultima = partes.count > 1 ? (partes.last?.prefix(1) ?? "") : ""
         return String(primeira + ultima).uppercased()
+    }
+
+    var roleEnum: RoleUsuario {
+        get { RoleUsuario(rawValue: role) ?? .usuario }
+        set { role = newValue.rawValue }
+    }
+
+    var ehAdmin: Bool { roleEnum == .admin }
+}
+
+/// Papéis de autorização. Por padrão todo usuário é `usuario` —
+/// `admin` precisa ser concedido por outro admin ou (em demos) é
+/// atribuído ao primeiro cadastrado.
+enum RoleUsuario: String, CaseIterable, Identifiable, Codable {
+    case usuario
+    case admin
+
+    var id: String { rawValue }
+
+    var titulo: String {
+        switch self {
+        case .usuario: return "Usuário"
+        case .admin: return "Administrador"
+        }
+    }
+
+    var simbolo: String {
+        switch self {
+        case .usuario: return "person.fill"
+        case .admin: return "person.badge.shield.checkmark.fill"
+        }
     }
 }
 

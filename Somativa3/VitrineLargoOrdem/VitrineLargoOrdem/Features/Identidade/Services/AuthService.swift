@@ -26,6 +26,9 @@ protocol AuthService: AnyObject {
 
     /// Apaga conta + dados associados (LGPD).
     func excluirConta() throws
+
+    /// Apenas admins: altera o papel de um usuário existente.
+    func alterarRole(emailAlvo: String, novaRole: RoleUsuario) throws
 }
 
 /// Implementação local com SwiftData. Usa UserDefaults para guardar
@@ -67,7 +70,12 @@ final class LocalAuthService: AuthService {
             throw AuthError.emailJaCadastrado
         }
 
-        let usuario = Usuario(email: emailLimpo, nome: nomeLimpo, provedor: "email")
+        let usuario = Usuario(
+            email: emailLimpo,
+            nome: nomeLimpo,
+            provedor: "email",
+            role: roleInicial(emailLimpo)
+        )
         let credencial = CredencialUsuario(email: emailLimpo, hashSenha: hash(senha))
         context.insert(usuario)
         context.insert(credencial)
@@ -75,6 +83,32 @@ final class LocalAuthService: AuthService {
 
         registrarSessao(usuario: usuario)
         return usuario
+    }
+
+    /// Regras para definir o papel inicial — paridade com o trigger Postgres.
+    /// 1. Se nenhum usuário existir ainda → admin (bootstrap).
+    /// 2. Se o e-mail começar com "admin@" → admin (atalho para demo).
+    /// 3. Caso contrário → usuario.
+    private func roleInicial(_ email: String) -> RoleUsuario {
+        if email.hasPrefix("admin@") { return .admin }
+        let descritor = FetchDescriptor<Usuario>()
+        let totalExistente = (try? context.fetchCount(descritor)) ?? 0
+        return totalExistente == 0 ? .admin : .usuario
+    }
+
+    /// Permite que um admin promova/rebaixe outro usuário pelo e-mail.
+    /// Em produção isso seria delegado à function `promover_usuario` do
+    /// Supabase (já criada no SQL 02-roles.sql).
+    func alterarRole(emailAlvo: String, novaRole: RoleUsuario) throws {
+        guard let atual = usuarioAtual, atual.ehAdmin else {
+            throw AuthError.desconhecido("Apenas administradores podem alterar papéis.")
+        }
+        let emailLimpo = emailAlvo.trimmingCharacters(in: .whitespacesAndNewlines).lowercased()
+        guard let alvo = usuarioComEmail(emailLimpo) else {
+            throw AuthError.desconhecido("Usuário com este e-mail não foi encontrado localmente.")
+        }
+        alvo.roleEnum = novaRole
+        try? context.save()
     }
 
     func entrar(email: String, senha: String) throws -> Usuario {

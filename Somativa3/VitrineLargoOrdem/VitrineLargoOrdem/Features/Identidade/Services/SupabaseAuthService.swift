@@ -79,4 +79,31 @@ final class SupabaseAuthService: AuthService {
         // A exclusão remota é responsabilidade de uma Edge Function
         // chamada em background — fora do escopo do MVP.
     }
+
+    func alterarRole(emailAlvo: String, novaRole: RoleUsuario) throws {
+        // Aplica localmente para resposta imediata.
+        try fallback.alterarRole(emailAlvo: emailAlvo, novaRole: novaRole)
+        // Em paralelo dispara a RPC `promover_usuario` no Supabase.
+        // Funções com SECURITY DEFINER já garantem a checagem de role
+        // server-side; aqui apenas mandamos.
+        Task { [client] in
+            struct Payload: Encodable {
+                let email_alvo: String
+                let nova_role: String
+            }
+            do {
+                let _: [RoleUsuarioRemoto] = try await client.inserir(
+                    tabela: "rpc/promover_usuario",
+                    registro: Payload(email_alvo: emailAlvo.lowercased(),
+                                      nova_role: novaRole.rawValue)
+                )
+            } catch {
+                print("[SupabaseAuth] alterarRole remote falhou: \(error.localizedDescription)")
+            }
+        }
+    }
+
+    private struct RoleUsuarioRemoto: Decodable {
+        let id: String?
+    }
 }

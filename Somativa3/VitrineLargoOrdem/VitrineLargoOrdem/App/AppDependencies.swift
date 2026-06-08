@@ -102,4 +102,11 @@ final class AppDependencies: ObservableObject {
             usuarioId: usuarioId
         )
     }
+
+    func makeAdminPedidosViewModel() -> AdminPedidosViewModel {
+        AdminPedidosViewModel(
+            context: modelContainer.mainContext,
+            orderRepository: orderRepository
+        )
+    }
 }

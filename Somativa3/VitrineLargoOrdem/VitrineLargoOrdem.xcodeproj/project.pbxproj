@@ -34,6 +34,7 @@
 		620031458DDFFAFD1648C6E3 /* RootTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 165163D108382D3F2DEA2283 /* RootTabView.swift */; };
 		66748FEC88246E2E5A269451 /* AddressRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DD2D93E4E9C0C0771BCDC5C /* AddressRepository.swift */; };
 		6AE71215FEB21A30D150DD5F /* AppDependencies.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA733AAF4D1F2417D5D2F633 /* AppDependencies.swift */; };
+		71DD1456F26EDEC8EA464D95 /* AdminPedidosViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A09888985C35C9BEE2C25A3F /* AdminPedidosViewModel.swift */; };
 		71FE02A2CAB1A78FA233718F /* CarrinhoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53EFEF3E4EE44CB0916A26F4 /* CarrinhoViewModel.swift */; };
 		72FF3469E7321752A30D3633 /* PerfilViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA466C4740357B1745666D43 /* PerfilViewModel.swift */; };
 		7422E10572A06D4769343AC4 /* DetalhePedidoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 654B683E34617F041F6A6153 /* DetalhePedidoView.swift */; };
@@ -43,6 +44,7 @@
 		956B4D5B662DC5DD33E47A93 /* Usuario.swift in Sources */ = {isa = PBXBuildFile; fileRef = A495A3FAF26895863161C04B /* Usuario.swift */; };
 		985626C1176F157240CF5902 /* ProdutoCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18FCC46CBB2744DEC436A004 /* ProdutoCardView.swift */; };
 		9A366959B9C9DC5CCBB412FD /* VitrineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD8A1CA330C16353F029B28E /* VitrineView.swift */; };
+		9DCC9540A9DBA1F7BFC3320C /* AdminDetalhePedidoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 279F9A42E4DA0A70C81162B2 /* AdminDetalhePedidoView.swift */; };
 		B00C09F21F17D3D9151DB9CE /* CartRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2E1782250933F25089272CF /* CartRepository.swift */; };
 		B10210059497024B1F3FD621 /* MockRepositories.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0CF5291E5158F40F16978F4 /* MockRepositories.swift */; };
 		B5866E4D7AC13A16322529ED /* ViaCEPService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE317A1A40EFA4AC18C48995 /* ViaCEPService.swift */; };
@@ -50,6 +52,7 @@
 		BAA7F618CC1E9D6FCF8F4C60 /* Pedido.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04AC9E2F0A6D56E7470E4D7B /* Pedido.swift */; };
 		C0D342A8CCA37B62F4B89323 /* SupabaseAuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C22540F46D5E91BA563EBD2D /* SupabaseAuthService.swift */; };
 		C256433FAA9727613759974B /* TermosUsoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A136A88C61CFAFC851D8B08C /* TermosUsoView.swift */; };
+		C7E51D21AC24A6BA2375C63F /* AdminPedidosView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01A6FED4E8DBCBBB7E319E8C /* AdminPedidosView.swift */; };
 		CE924FEAE5597C698EEF6D90 /* AuthGate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C26D5A66645DC88643F8FB3 /* AuthGate.swift */; };
 		D5AFE54658D90B1ECD665AD5 /* CartItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6D6A774FA5E4C5D0B65C0FB /* CartItem.swift */; };
 		DB772DE1DD23E68232308778 /* PoliticaPrivacidadeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E456667A7F656944463A375E /* PoliticaPrivacidadeView.swift */; };
@@ -90,6 +93,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		01A6FED4E8DBCBBB7E319E8C /* AdminPedidosView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdminPedidosView.swift; sourceTree = "<group>"; };
 		01E890C08207ECA4C08524AF /* EnderecosView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnderecosView.swift; sourceTree = "<group>"; };
 		047F91BAAF0625F26DF9C104 /* FavoriteItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteItem.swift; sourceTree = "<group>"; };
 		04AC9E2F0A6D56E7470E4D7B /* Pedido.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pedido.swift; sourceTree = "<group>"; };
@@ -101,6 +105,7 @@
 		1F009CB6341FCD99CB4947F8 /* DetalhesProdutoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetalhesProdutoView.swift; sourceTree = "<group>"; };
 		2127A6C6D17A36600E47D1EC /* VitrineViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VitrineViewModelTests.swift; sourceTree = "<group>"; };
 		2751FADE628D8FB64338A8C7 /* SobreView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SobreView.swift; sourceTree = "<group>"; };
+		279F9A42E4DA0A70C81162B2 /* AdminDetalhePedidoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdminDetalhePedidoView.swift; sourceTree = "<group>"; };
 		2AC90ED7AF30E17FE52392C2 /* EnderecoFormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnderecoFormView.swift; sourceTree = "<group>"; };
 		33E319E284355AAEE3634305 /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		345201A75B84911EB3CB7D9B /* CartItemRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartItemRowView.swift; sourceTree = "<group>"; };
@@ -122,6 +127,7 @@
 		9C26D5A66645DC88643F8FB3 /* AuthGate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthGate.swift; sourceTree = "<group>"; };
 		9E479F2D345CD8DA5F10F1CA /* PrecoFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrecoFormatter.swift; sourceTree = "<group>"; };
 		9FECCED538EC85A6AE671C37 /* FavoritosViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritosViewModelTests.swift; sourceTree = "<group>"; };
+		A09888985C35C9BEE2C25A3F /* AdminPedidosViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdminPedidosViewModel.swift; sourceTree = "<group>"; };
 		A136A88C61CFAFC851D8B08C /* TermosUsoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermosUsoView.swift; sourceTree = "<group>"; };
 		A17D2DC8677D17C765FD1200 /* VitrineViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VitrineViewModel.swift; sourceTree = "<group>"; };
 		A1E4A67F25631674FFB782BA /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
@@ -292,6 +298,8 @@
 		593EE08D4098C280778D06C2 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				279F9A42E4DA0A70C81162B2 /* AdminDetalhePedidoView.swift */,
+				01A6FED4E8DBCBBB7E319E8C /* AdminPedidosView.swift */,
 				654B683E34617F041F6A6153 /* DetalhePedidoView.swift */,
 				CCF33FB5C071A379E56C5450 /* PedidosView.swift */,
 			);
@@ -428,6 +436,7 @@
 		AD21047D9269104A1B936717 /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
+				A09888985C35C9BEE2C25A3F /* AdminPedidosViewModel.swift */,
 				B0930EA2C60040F545028DE8 /* PedidosViewModel.swift */,
 			);
 			path = ViewModels;
@@ -723,6 +732,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				66748FEC88246E2E5A269451 /* AddressRepository.swift in Sources */,
+				9DCC9540A9DBA1F7BFC3320C /* AdminDetalhePedidoView.swift in Sources */,
+				C7E51D21AC24A6BA2375C63F /* AdminPedidosView.swift in Sources */,
+				71DD1456F26EDEC8EA464D95 /* AdminPedidosViewModel.swift in Sources */,
 				250DA4CCA4CF125791E36E2C /* AppConfig.swift in Sources */,
 				6AE71215FEB21A30D150DD5F /* AppDependencies.swift in Sources */,
 				CE924FEAE5597C698EEF6D90 /* AuthGate.swift in Sources */,

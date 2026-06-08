@@ -41,10 +41,42 @@ enum PersistenceController {
             schema: schema,
             isStoredInMemoryOnly: inMemory
         )
+
+        // Migração destrutiva para MVP acadêmico: se o schema do
+        // ModelContainer não bate com o banco em disco (ex.: campo
+        // novo `role` em Usuario), apagamos e recriamos. Em V2 com
+        // SchemaMigrationPlan formal a estratégia será preservar dados.
         do {
             return try ModelContainer(for: schema, configurations: [config])
         } catch {
-            fatalError("Falha ao inicializar ModelContainer: \(error)")
+            if inMemory {
+                fatalError("Falha ao inicializar ModelContainer in-memory: \(error)")
+            }
+            print("[PersistenceController] Migração falhou — recriando store. Erro: \(error)")
+            apagarStorePersistente()
+            do {
+                return try ModelContainer(for: schema, configurations: [config])
+            } catch {
+                fatalError("Falha ao recriar ModelContainer após reset: \(error)")
+            }
+        }
+    }
+
+    /// Remove o arquivo SQLite (e seus -wal/-shm) usado pelo SwiftData.
+    /// O próximo `ModelContainer` cria um banco vazio que dispara seed.
+    private static func apagarStorePersistente() {
+        let fm = FileManager.default
+        guard let suporte = try? fm.url(
+            for: .applicationSupportDirectory,
+            in: .userDomainMask,
+            appropriateFor: nil,
+            create: false
+        ) else { return }
+
+        for sufixo in [".store", ".store-wal", ".store-shm", "default.store",
+                       "default.store-wal", "default.store-shm"] {
+            let arquivo = suporte.appendingPathComponent(sufixo)
+            try? fm.removeItem(at: arquivo)
         }
     }
 
