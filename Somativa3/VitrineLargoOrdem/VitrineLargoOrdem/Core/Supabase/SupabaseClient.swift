@@ -159,6 +159,25 @@ actor SupabaseClient {
         sessaoAtual = nil
     }
 
+    // MARK: - RPC
+
+    /// Chama uma função PostgreSQL via PostgREST (`/rest/v1/rpc/<nome>`).
+    ///
+    /// Diferente de `inserir`, que espera um array de resultados (tabela REST),
+    /// funções RPC que retornam um único row devolvem um objeto JSON plano.
+    /// Use para chamadas como `promover_usuario`, `is_admin`, etc.
+    func chamarRPC<TIn: Encodable, TOut: Decodable>(
+        nome: String,
+        payload: TIn
+    ) async throws -> TOut {
+        return try await requisicao(
+            metodo: "POST",
+            caminho: "/rest/v1/rpc/\(nome)",
+            corpo: payload,
+            autenticado: true
+        )
+    }
+
     // MARK: - REST genérico
 
     /// GET com filtros estilo PostgREST (`coluna=eq.valor`).
@@ -254,6 +273,10 @@ actor SupabaseClient {
             requisicao.httpBody = try encoder.encode(corpo)
         }
 
+        #if DEBUG
+        print("[SupabaseClient] → \(metodo) \(url.absoluteString)")
+        #endif
+
         let (data, response): (Data, URLResponse)
         do {
             (data, response) = try await session.data(for: requisicao)
@@ -264,6 +287,10 @@ actor SupabaseClient {
         guard let http = response as? HTTPURLResponse else {
             throw SupabaseError.requisicaoInvalida
         }
+
+        #if DEBUG
+        print("[SupabaseClient] ← \(http.statusCode) (\(metodo) \(caminho))")
+        #endif
 
         if http.statusCode == 401 || http.statusCode == 403 {
             throw SupabaseError.naoAutenticado

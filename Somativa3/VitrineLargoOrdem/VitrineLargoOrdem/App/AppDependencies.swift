@@ -40,9 +40,15 @@ final class AppDependencies: ObservableObject {
             ))
             self.supabaseClient = client
             self.authService = SupabaseAuthService(client: client, context: context)
+            #if DEBUG
+            print("[AppConfig] ✅ Supabase ATIVO — \(AppConfig.supabaseURL.host ?? "?")")
+            #endif
         } else {
             self.supabaseClient = nil
             self.authService = LocalAuthService(context: context)
+            #if DEBUG
+            print("[AppConfig] ⚠️ Supabase DESATIVADO — usando LocalAuthService")
+            #endif
         }
     }
 

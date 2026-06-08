@@ -38,13 +38,15 @@ final class SupabaseAuthService: AuthService {
         // virá em outro PR.
         let emailLimpo = email.lowercased()
         Task { [client] in
+            print("[SupabaseAuth] 🔄 cadastrar — enviando para Supabase: \(emailLimpo)")
             do {
                 let resposta = try await client.cadastrar(email: emailLimpo, senha: senha, nome: nome)
                 if resposta.sessao != nil {
-                    print("[SupabaseAuth] ✅ cadastrar OK — sessão ativa, usuário: \(resposta.usuario.email ?? emailLimpo)")
+                    print("[SupabaseAuth] ✅ cadastrar OK — sessão ativa, id: \(resposta.usuario.id)")
                 } else {
-                    print("[SupabaseAuth] ⚠️ cadastrar OK — confirmação de e-mail pendente.")
-                    print("[SupabaseAuth]    Desabilite 'Confirm email' em Authentication > Providers > Email.")
+                    print("[SupabaseAuth] ⚠️ cadastrar OK — id: \(resposta.usuario.id)")
+                    print("[SupabaseAuth]    Registro criado no Supabase. Para logar via app sem e-mail de confirmação,")
+                    print("[SupabaseAuth]    desabilite 'Confirm email' em Authentication > Providers > Email no dashboard.")
                 }
             } catch {
                 print("[SupabaseAuth] ❌ cadastrar falhou: \(error.localizedDescription)")
@@ -97,19 +99,23 @@ final class SupabaseAuthService: AuthService {
                 let email_alvo: String
                 let nova_role: String
             }
+            // A função `promover_usuario` retorna `public.usuarios` (objeto único,
+            // não array). Por isso usamos `chamarRPC` em vez de `inserir`.
             do {
-                let _: [RoleUsuarioRemoto] = try await client.inserir(
-                    tabela: "rpc/promover_usuario",
-                    registro: Payload(email_alvo: emailAlvo.lowercased(),
-                                      nova_role: novaRole.rawValue)
+                let _: RoleUsuarioRemoto = try await client.chamarRPC(
+                    nome: "promover_usuario",
+                    payload: Payload(email_alvo: emailAlvo.lowercased(),
+                                     nova_role: novaRole.rawValue)
                 )
+                print("[SupabaseAuth] ✅ alterarRole remoto OK — \(emailAlvo) → \(novaRole.rawValue)")
             } catch {
-                print("[SupabaseAuth] alterarRole remote falhou: \(error.localizedDescription)")
+                print("[SupabaseAuth] ❌ alterarRole remoto falhou: \(error.localizedDescription)")
             }
         }
     }
 
+    /// Decodifica apenas o `id` do row retornado por `promover_usuario`.
     private struct RoleUsuarioRemoto: Decodable {
-        let id: String?
+        let id: String
     }
 }
