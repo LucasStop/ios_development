@@ -39,10 +39,16 @@ final class SupabaseAuthService: AuthService {
         let emailLimpo = email.lowercased()
         Task {
             do {
-                _ = try await client.cadastrar(email: emailLimpo, senha: senha, nome: nome)
+                let resposta = try await client.cadastrar(email: emailLimpo, senha: senha, nome: nome)
+                if resposta.sessao != nil {
+                    print("[SupabaseAuth] ✅ cadastrar OK — sessão ativa, usuário: \(resposta.usuario.email ?? emailLimpo)")
+                } else {
+                    print("[SupabaseAuth] ⚠️ cadastrar OK — confirmação de e-mail pendente.")
+                    print("[SupabaseAuth]    Verifique a caixa de entrada OU desabilite 'Confirm email'")
+                    print("[SupabaseAuth]    em: Authentication > Providers > Email (dashboard Supabase).")
+                }
             } catch {
-                // Log no console; não bloqueia a UX.
-                print("[SupabaseAuth] cadastrar falhou: \(error.localizedDescription)")
+                print("[SupabaseAuth] ❌ cadastrar falhou: \(error.localizedDescription)")
             }
         }
         return local

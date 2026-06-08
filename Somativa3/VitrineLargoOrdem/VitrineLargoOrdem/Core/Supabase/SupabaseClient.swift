@@ -47,6 +47,26 @@ actor SupabaseClient {
         }
     }
 
+    /// Resposta do endpoint /auth/v1/signup.
+    /// Quando a confirmação de e-mail está habilitada no projeto Supabase,
+    /// `accessToken` e `refreshToken` são nil — apenas o usuário é retornado.
+    struct RespostaCadastro: Decodable {
+        let usuario: UsuarioRemoto
+        let accessToken: String?
+        let refreshToken: String?
+
+        enum CodingKeys: String, CodingKey {
+            case usuario = "user"
+            case accessToken = "access_token"
+            case refreshToken = "refresh_token"
+        }
+
+        var sessao: Sessao? {
+            guard let access = accessToken, let refresh = refreshToken else { return nil }
+            return Sessao(accessToken: access, refreshToken: refresh, usuario: usuario)
+        }
+    }
+
     struct UsuarioRemoto: Codable, Equatable {
         let id: String
         let email: String?
@@ -82,21 +102,21 @@ actor SupabaseClient {
 
     // MARK: - Auth
 
-    func cadastrar(email: String, senha: String, nome: String) async throws -> Sessao {
+    func cadastrar(email: String, senha: String, nome: String) async throws -> RespostaCadastro {
         struct Payload: Encodable {
             let email: String
             let password: String
             let data: [String: String]
         }
         let payload = Payload(email: email, password: senha, data: ["nome": nome])
-        let sessao: Sessao = try await requisicao(
+        let resposta: RespostaCadastro = try await requisicao(
             metodo: "POST",
             caminho: "/auth/v1/signup",
             corpo: payload,
             autenticado: false
         )
-        sessaoAtual = sessao
-        return sessao
+        sessaoAtual = resposta.sessao
+        return resposta
     }
 
     func entrar(email: String, senha: String) async throws -> Sessao {
