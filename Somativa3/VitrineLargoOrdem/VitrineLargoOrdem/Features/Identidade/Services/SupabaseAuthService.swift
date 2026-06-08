@@ -37,15 +37,14 @@ final class SupabaseAuthService: AuthService {
         // já cadastrado lá), mantemos o local — sincronização explícita
         // virá em outro PR.
         let emailLimpo = email.lowercased()
-        Task {
+        Task { [client] in
             do {
                 let resposta = try await client.cadastrar(email: emailLimpo, senha: senha, nome: nome)
                 if resposta.sessao != nil {
                     print("[SupabaseAuth] ✅ cadastrar OK — sessão ativa, usuário: \(resposta.usuario.email ?? emailLimpo)")
                 } else {
                     print("[SupabaseAuth] ⚠️ cadastrar OK — confirmação de e-mail pendente.")
-                    print("[SupabaseAuth]    Verifique a caixa de entrada OU desabilite 'Confirm email'")
-                    print("[SupabaseAuth]    em: Authentication > Providers > Email (dashboard Supabase).")
+                    print("[SupabaseAuth]    Desabilite 'Confirm email' em Authentication > Providers > Email.")
                 }
             } catch {
                 print("[SupabaseAuth] ❌ cadastrar falhou: \(error.localizedDescription)")
@@ -55,15 +54,16 @@ final class SupabaseAuthService: AuthService {
     }
 
     func entrar(email: String, senha: String) throws -> Usuario {
-        // Tenta primeiro no local — credencial já existe.
+        // Tenta primeiro no local — cobre uso offline e sessões já existentes.
         if let usuarioLocal = try? fallback.entrar(email: email, senha: senha) {
-            // Sincroniza em background; ignorar erro.
-            Task { _ = try? await client.entrar(email: email.lowercased(), senha: senha) }
+            // Sincroniza token no background; ignorar erro.
+            Task { [client] in _ = try? await client.entrar(email: email.lowercased(), senha: senha) }
             return usuarioLocal
         }
 
-        // Não tinha no local — tenta criar via Supabase (a UI converge
-        // ao final independente do path).
+        // Usuário não encontrado localmente (ex.: reinstalou o app).
+        // Para o MVP, orientamos o usuário a se cadastrar novamente —
+        // sincronização cross-device seria feature de V2.
         throw AuthError.credenciaisInvalidas
     }
 

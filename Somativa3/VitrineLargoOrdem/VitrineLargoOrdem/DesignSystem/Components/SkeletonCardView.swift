@@ -7,12 +7,13 @@ import SwiftUI
 struct SkeletonCardView: View {
 
     @State private var brilhante = false
+    @ScaledMetric(relativeTo: .body) private var alturaImagem: CGFloat = 130
 
     var body: some View {
         VStack(alignment: .leading, spacing: DSSpacing.xs) {
             RoundedRectangle(cornerRadius: DSSpacing.cornerMd)
                 .fill(skeletonGradient)
-                .frame(height: 130)
+                .frame(height: alturaImagem)
 
             RoundedRectangle(cornerRadius: 4)
                 .fill(skeletonGradient)

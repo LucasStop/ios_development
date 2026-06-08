@@ -251,7 +251,7 @@ struct PerfilView: View {
             }
             .buttonStyle(.bordered)
             .tint(DSColor.primary)
-            .accessibilityHint("Abre a tela com informacoes do app, equipe e politica de privacidade.")
+            .accessibilityHint("Abre a tela com informações do app, equipe e política de privacidade.")
 
             Button {
                 authViewModel.sair()
@@ -261,7 +261,7 @@ struct PerfilView: View {
             }
             .buttonStyle(.bordered)
             .tint(DSColor.primary)
-            .accessibilityHint("Encerra a sessao atual e volta para a tela de login.")
+            .accessibilityHint("Encerra a sessão atual e volta para a tela de login.")
 
             Button(role: .destructive) {
                 mostrandoExcluir = true

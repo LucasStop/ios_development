@@ -246,6 +246,7 @@ struct CheckoutView: View {
                     Text("Li e aceito os termos de uso e a política de privacidade.")
                         .font(DSFont.body)
                 }
+                .accessibilityHint("Obrigatório para confirmar o pedido.")
                 .padding(DSSpacing.md)
                 .background(DSColor.background)
                 .clipShape(RoundedRectangle(cornerRadius: DSSpacing.cornerLg))

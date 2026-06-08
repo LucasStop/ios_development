@@ -109,6 +109,7 @@ private struct EnderecoRowView: View {
         .padding(.vertical, DSSpacing.xxs)
         .accessibilityElement(children: .combine)
         .accessibilityLabel(endereco.descricaoAcessivel)
+        .accessibilityHint("Deslize para remover, editar ou definir como padrão.")
         .swipeActions(edge: .trailing, allowsFullSwipe: false) {
             Button(role: .destructive, action: onRemover) {
                 Label("Remover", systemImage: "trash")

@@ -89,7 +89,7 @@ struct LoginView: View {
             .disabled(!viewModel.formularioValido || viewModel.carregando)
             .accessibilityHint(viewModel.modo == .login
                                ? "Faz login com e-mail e senha."
-                               : "Cadastra um novo usuario com e-mail e senha.")
+                               : "Cadastra um novo usuário com e-mail e senha.")
 
             Button {
                 viewModel.alternarModo()

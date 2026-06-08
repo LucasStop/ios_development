@@ -35,6 +35,9 @@ struct OnboardingView: View {
                 }
             }
             .tabViewStyle(.page(indexDisplayMode: .never))
+            .accessibilityElement(children: .contain)
+            .accessibilityLabel("Apresentação do app")
+            .accessibilityValue("Página \(paginaAtual + 1) de \(paginas.count)")
 
             indicadores
 
@@ -110,7 +113,7 @@ struct OnboardingView: View {
             }
             .buttonStyle(.borderedProminent)
             .tint(DSColor.primary)
-            .accessibilityHint("Conclui a apresentacao e abre a vitrine.")
+            .accessibilityHint("Conclui a apresentação e abre a vitrine.")
         } else {
             HStack {
                 Button("Pular") {
@@ -119,7 +122,8 @@ struct OnboardingView: View {
                 .buttonStyle(.borderless)
                 .foregroundStyle(DSColor.textSecondary)
                 .frame(minWidth: DSSpacing.touchTargetMin, minHeight: DSSpacing.touchTargetMin)
-                .accessibilityHint("Pula a apresentacao e abre a vitrine.")
+                .contentShape(Rectangle())
+                .accessibilityHint("Pula a apresentação e abre a vitrine.")
 
                 Spacer()
 
@@ -133,7 +137,7 @@ struct OnboardingView: View {
                 }
                 .buttonStyle(.borderedProminent)
                 .tint(DSColor.primary)
-                .accessibilityHint("Avanca para a proxima tela da apresentacao.")
+                .accessibilityHint("Avança para a próxima tela da apresentação.")
             }
         }
     }

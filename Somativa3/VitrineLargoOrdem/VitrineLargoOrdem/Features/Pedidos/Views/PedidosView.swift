@@ -94,6 +94,7 @@ struct PedidosView: View {
         }()
         HStack(spacing: DSSpacing.xxs) {
             Image(systemName: status.simbolo)
+                .accessibilityHidden(true)
             Text(status.titulo)
         }
         .font(DSFont.metadata.weight(.semibold))

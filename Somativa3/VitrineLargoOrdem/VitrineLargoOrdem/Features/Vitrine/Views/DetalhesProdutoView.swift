@@ -72,7 +72,7 @@ struct DetalhesProdutoView: View {
                         .frame(minWidth: DSSpacing.touchTargetMin, minHeight: DSSpacing.touchTargetMin)
                 }
                 .accessibilityLabel("Compartilhar \(produto.nome)")
-                .accessibilityHint("Abre as opcoes para compartilhar este produto.")
+                .accessibilityHint("Abre as opções para compartilhar este produto.")
             }
         }
         .alert("Contato enviado", isPresented: $mostrandoConfirmacaoContato) {
