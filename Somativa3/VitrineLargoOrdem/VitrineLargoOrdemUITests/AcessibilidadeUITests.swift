@@ -14,10 +14,11 @@ final class AcessibilidadeUITests: XCTestCase {
     override func setUpWithError() throws {
         continueAfterFailure = false
         app = XCUIApplication()
-        // Pula onboarding nos UITests via launch environment.
-        // O App lê esta env var na init e força jaViuOnboarding = true.
+        // Pula onboarding e auth nos UITests via launch environment.
+        // O App lê estas env vars na init e ajusta o estado antes do SwiftUI subir.
         app.launchArguments = ["-UITestMode"]
         app.launchEnvironment["SKIP_ONBOARDING"] = "1"
+        app.launchEnvironment["AUTO_LOGIN"] = "1"
         app.launch()
     }
 

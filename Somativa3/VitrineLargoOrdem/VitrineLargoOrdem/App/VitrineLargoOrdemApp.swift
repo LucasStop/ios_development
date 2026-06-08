@@ -4,13 +4,23 @@ import SwiftData
 @main
 struct VitrineLargoOrdemApp: App {
 
-    @StateObject private var dependencies = AppDependencies()
+    @StateObject private var dependencies: AppDependencies
+    @StateObject private var authViewModel: AuthViewModel
     @AppStorage("jaViuOnboarding") private var jaViuOnboarding: Bool = false
 
     init() {
-        // Permite que UITests pulem o onboarding sem alterar o estado real do app.
+        // Permite que UITests pulem o onboarding e/ou auth sem alterar o estado real do app.
         if ProcessInfo.processInfo.environment["SKIP_ONBOARDING"] == "1" {
             UserDefaults.standard.set(true, forKey: "jaViuOnboarding")
+        }
+
+        let deps = AppDependencies()
+        _dependencies = StateObject(wrappedValue: deps)
+        _authViewModel = StateObject(wrappedValue: deps.makeAuthViewModel())
+
+        // Auto-login para UITests — pula tela de login.
+        if ProcessInfo.processInfo.environment["AUTO_LOGIN"] == "1" {
+            deps.makeAuthViewModel().entrarComoConvidado()
         }
     }
 
@@ -18,7 +28,7 @@ struct VitrineLargoOrdemApp: App {
         WindowGroup {
             Group {
                 if jaViuOnboarding {
-                    RootTabView(dependencies: dependencies)
+                    AuthGate(authViewModel: authViewModel, dependencies: dependencies)
                 } else {
                     OnboardingView(jaViu: $jaViuOnboarding)
                 }

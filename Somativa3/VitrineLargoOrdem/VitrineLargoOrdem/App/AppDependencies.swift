@@ -14,6 +14,7 @@ final class AppDependencies: ObservableObject {
     let productRepository: ProductRepository
     let favoriteRepository: FavoriteRepository
     let cartRepository: CartRepository
+    let authService: AuthService
 
     init(modelContainer: ModelContainer) {
         self.modelContainer = modelContainer
@@ -21,6 +22,7 @@ final class AppDependencies: ObservableObject {
         self.productRepository = LocalProductRepository(context: context)
         self.favoriteRepository = LocalFavoriteRepository(context: context)
         self.cartRepository = LocalCartRepository(context: context)
+        self.authService = LocalAuthService(context: context)
     }
 
     /// Inicializador padrão usado pelo App — usa o container persistente compartilhado.
@@ -44,5 +46,9 @@ final class AppDependencies: ObservableObject {
             productRepository: productRepository,
             favoriteRepository: favoriteRepository
         )
+    }
+
+    func makeAuthViewModel() -> AuthViewModel {
+        AuthViewModel(authService: authService)
     }
 }

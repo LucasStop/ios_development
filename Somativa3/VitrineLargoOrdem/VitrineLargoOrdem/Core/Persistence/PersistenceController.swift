@@ -30,6 +30,9 @@ enum PersistenceController {
         let schema = Schema([
             Produto.self,
             FavoriteItem.self,
+            CartItem.self,
+            Usuario.self,
+            CredencialUsuario.self,
         ])
         let config = ModelConfiguration(
             schema: schema,

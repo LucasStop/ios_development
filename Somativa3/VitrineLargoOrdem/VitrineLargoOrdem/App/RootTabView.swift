@@ -7,12 +7,14 @@ import SwiftUI
 /// camada de Repository abaixo.
 struct RootTabView: View {
     @EnvironmentObject var dependencies: AppDependencies
+    @ObservedObject var authViewModel: AuthViewModel
 
     @StateObject private var vitrineViewModel: VitrineViewModel
     @StateObject private var carrinhoViewModel: CarrinhoViewModel
     @StateObject private var favoritosViewModel: FavoritosViewModel
 
-    init(dependencies: AppDependencies) {
+    init(dependencies: AppDependencies, authViewModel: AuthViewModel) {
+        self.authViewModel = authViewModel
         _vitrineViewModel = StateObject(wrappedValue: dependencies.makeVitrineViewModel())
         _carrinhoViewModel = StateObject(wrappedValue: dependencies.makeCarrinhoViewModel())
         _favoritosViewModel = StateObject(wrappedValue: dependencies.makeFavoritosViewModel())
