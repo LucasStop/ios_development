@@ -11,6 +11,7 @@ struct PerfilView: View {
 
     @State private var fotoSelecionada: PhotosPickerItem?
     @State private var editandoNome = false
+    @State private var mostrandoExcluir = false
 
     var body: some View {
         NavigationStack {
@@ -19,6 +20,8 @@ struct PerfilView: View {
                     cabecalhoAvatar
                     cardDados
                     cardEnderecos
+                    cardPedidos
+                    cardSessao
                 }
                 .padding(DSSpacing.lg)
             }
@@ -201,5 +204,85 @@ struct PerfilView: View {
             .font(.caption.weight(.semibold))
             .foregroundStyle(DSColor.textSecondary)
             .accessibilityAddTraits(.isHeader)
+    }
+
+    // MARK: - Card de pedidos
+
+    private var cardPedidos: some View {
+        VStack(alignment: .leading, spacing: DSSpacing.sm) {
+            secao(titulo: "Pedidos")
+            NavigationLink {
+                PedidosView(
+                    viewModel: dependencies.makePedidosViewModel(usuarioId: perfilViewModel.usuario.id),
+                    dependencies: dependencies
+                )
+            } label: {
+                HStack {
+                    Image(systemName: "bag.fill")
+                        .foregroundStyle(DSColor.primary)
+                        .frame(width: 24)
+                        .accessibilityHidden(true)
+                    Text("Meus pedidos").font(DSFont.body)
+                    Spacer()
+                    Image(systemName: "chevron.right")
+                        .foregroundStyle(DSColor.textSecondary)
+                        .accessibilityHidden(true)
+                }
+                .frame(maxWidth: .infinity, minHeight: DSSpacing.touchTargetMin)
+                .contentShape(Rectangle())
+            }
+            .buttonStyle(.plain)
+            .accessibilityHint("Abre a lista de pedidos com timeline de status.")
+        }
+        .padding(DSSpacing.md)
+        .background(DSColor.background)
+        .clipShape(RoundedRectangle(cornerRadius: DSSpacing.cornerLg, style: .continuous))
+    }
+
+    // MARK: - Card sessão (Sair + Excluir conta)
+
+    private var cardSessao: some View {
+        VStack(spacing: DSSpacing.sm) {
+            NavigationLink {
+                SobreView()
+            } label: {
+                Label("Sobre o app e termos", systemImage: "info.circle")
+                    .frame(maxWidth: .infinity, minHeight: DSSpacing.touchTargetMin)
+            }
+            .buttonStyle(.bordered)
+            .tint(DSColor.primary)
+            .accessibilityHint("Abre a tela com informacoes do app, equipe e politica de privacidade.")
+
+            Button {
+                authViewModel.sair()
+            } label: {
+                Label("Sair", systemImage: "rectangle.portrait.and.arrow.right")
+                    .frame(maxWidth: .infinity, minHeight: DSSpacing.touchTargetMin)
+            }
+            .buttonStyle(.bordered)
+            .tint(DSColor.primary)
+            .accessibilityHint("Encerra a sessao atual e volta para a tela de login.")
+
+            Button(role: .destructive) {
+                mostrandoExcluir = true
+            } label: {
+                Label("Excluir minha conta", systemImage: "trash")
+                    .frame(maxWidth: .infinity, minHeight: DSSpacing.touchTargetMin)
+            }
+            .buttonStyle(.bordered)
+            .accessibilityHint("Remove sua conta e todos os dados locais. Pede confirmacao.")
+            .confirmationDialog(
+                "Excluir minha conta?",
+                isPresented: $mostrandoExcluir,
+                titleVisibility: .visible
+            ) {
+                Button("Excluir conta", role: .destructive) {
+                    authViewModel.excluirConta()
+                }
+                Button("Cancelar", role: .cancel) {}
+            } message: {
+                Text("Esta acao apaga seu usuario e dados locais. Em V1 com Supabase os dados sao removidos no servidor tambem (LGPD).")
+            }
+        }
     }
 }

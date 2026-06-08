@@ -19,6 +19,8 @@ final class AcessibilidadeUITests: XCTestCase {
         app.launchArguments = ["-UITestMode"]
         app.launchEnvironment["SKIP_ONBOARDING"] = "1"
         app.launchEnvironment["AUTO_LOGIN"] = "1"
+        // Desliga rede no Supabase para testes determinísticos.
+        app.launchEnvironment["USE_SUPABASE"] = "0"
         app.launch()
     }
 

@@ -17,6 +17,11 @@ final class AppDependencies: ObservableObject {
     let authService: AuthService
     let addressRepository: AddressRepository
     let cepService: CEPService
+    let orderRepository: OrderRepository
+
+    /// Cliente Supabase compartilhado, criado uma única vez por sessão.
+    /// `nil` quando `AppConfig.useSupabase == false` (UITests/CI).
+    let supabaseClient: SupabaseClient?
 
     init(modelContainer: ModelContainer) {
         self.modelContainer = modelContainer
@@ -24,9 +29,21 @@ final class AppDependencies: ObservableObject {
         self.productRepository = LocalProductRepository(context: context)
         self.favoriteRepository = LocalFavoriteRepository(context: context)
         self.cartRepository = LocalCartRepository(context: context)
-        self.authService = LocalAuthService(context: context)
         self.addressRepository = LocalAddressRepository(context: context)
         self.cepService = ViaCEPService()
+        self.orderRepository = LocalOrderRepository(context: context)
+
+        if AppConfig.useSupabase {
+            let client = SupabaseClient(configuracao: .init(
+                url: AppConfig.supabaseURL,
+                publishableKey: AppConfig.supabaseKey
+            ))
+            self.supabaseClient = client
+            self.authService = SupabaseAuthService(client: client, context: context)
+        } else {
+            self.supabaseClient = nil
+            self.authService = LocalAuthService(context: context)
+        }
     }
 
     /// Inicializador padrão usado pelo App — usa o container persistente compartilhado.
@@ -70,6 +87,19 @@ final class AppDependencies: ObservableObject {
             addressRepository: addressRepository,
             usuarioId: usuarioId,
             editando: editando
+        )
+    }
+
+    func makePedidosViewModel(usuarioId: UUID) -> PedidosViewModel {
+        PedidosViewModel(orderRepository: orderRepository, usuarioId: usuarioId)
+    }
+
+    func makeCheckoutViewModel(carrinhoViewModel: CarrinhoViewModel, usuarioId: UUID) -> CheckoutViewModel {
+        CheckoutViewModel(
+            carrinhoViewModel: carrinhoViewModel,
+            addressRepository: addressRepository,
+            orderRepository: orderRepository,
+            usuarioId: usuarioId
         )
     }
 }

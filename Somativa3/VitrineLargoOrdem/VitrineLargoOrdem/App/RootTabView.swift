@@ -47,13 +47,17 @@ struct RootTabView: View {
             .accessibilityLabel("Aba Favoritos")
             .onAppear { favoritosViewModel.recarregar() }
 
-            CarrinhoView(viewModel: carrinhoViewModel)
-                .tabItem {
-                    Label("Carrinho", systemImage: "cart.fill")
-                }
-                .accessibilityLabel("Aba Carrinho")
-                .badge(carrinhoViewModel.totalDeItens)
-                .onAppear { carrinhoViewModel.recarregar() }
+            CarrinhoView(
+                viewModel: carrinhoViewModel,
+                dependencies: dependencies,
+                usuarioId: authViewModel.usuarioAtual?.id
+            )
+            .tabItem {
+                Label("Carrinho", systemImage: "cart.fill")
+            }
+            .accessibilityLabel("Aba Carrinho")
+            .badge(carrinhoViewModel.totalDeItens)
+            .onAppear { carrinhoViewModel.recarregar() }
 
             PerfilView(
                 perfilViewModel: perfilViewModel,

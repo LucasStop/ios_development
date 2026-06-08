@@ -2,9 +2,18 @@ import SwiftUI
 
 struct CarrinhoView: View {
     @ObservedObject var viewModel: CarrinhoViewModel
+    let dependencies: AppDependencies?
+    let usuarioId: UUID?
 
     @State private var mostrandoConfirmacaoLimpar = false
     @State private var mostrandoConfirmacaoCompra = false
+    @State private var checkoutAberto = false
+
+    init(viewModel: CarrinhoViewModel, dependencies: AppDependencies? = nil, usuarioId: UUID? = nil) {
+        self.viewModel = viewModel
+        self.dependencies = dependencies
+        self.usuarioId = usuarioId
+    }
 
     var body: some View {
         NavigationStack {
@@ -42,6 +51,17 @@ struct CarrinhoView: View {
                 }
             } message: {
                 Text("Seu pedido de \(viewModel.totalFormatado) foi recebido. Esta é uma confirmação fictícia do MVP.")
+            }
+            .fullScreenCover(isPresented: $checkoutAberto, onDismiss: { viewModel.recarregar() }) {
+                if let deps = dependencies, let userId = usuarioId {
+                    CheckoutView(
+                        viewModel: deps.makeCheckoutViewModel(
+                            carrinhoViewModel: viewModel,
+                            usuarioId: userId
+                        ),
+                        dependencies: deps
+                    )
+                }
             }
         }
     }
@@ -113,14 +133,18 @@ struct CarrinhoView: View {
 
     private var botaoFinalizar: some View {
         Button {
-            mostrandoConfirmacaoCompra = true
+            if dependencies != nil && usuarioId != nil {
+                checkoutAberto = true
+            } else {
+                mostrandoConfirmacaoCompra = true
+            }
         } label: {
-            Label("Finalizar pedido (mock)", systemImage: "checkmark.seal.fill")
+            Label("Ir para o checkout", systemImage: "creditcard.fill")
                 .font(DSFont.buttonLabel)
                 .frame(maxWidth: .infinity, minHeight: 50)
         }
         .buttonStyle(.borderedProminent)
         .tint(DSColor.primary)
-        .accessibilityHint("Confirma o pedido. No MVP a finalizacao e ficticia.")
+        .accessibilityHint("Abre o checkout em 4 etapas para finalizar o pedido.")
     }
 }
