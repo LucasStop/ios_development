@@ -48,8 +48,12 @@ actor SupabaseClient {
     }
 
     /// Resposta do endpoint /auth/v1/signup.
-    /// Quando a confirmação de e-mail está habilitada no projeto Supabase,
-    /// `accessToken` e `refreshToken` são nil — apenas o usuário é retornado.
+    ///
+    /// O Supabase retorna formatos diferentes dependendo da configuração:
+    /// - Email confirmation OFF → `{"access_token":"…","refresh_token":"…","user":{…}}`
+    /// - Email confirmation ON  → objeto plano sem chave "user": `{"id":"…","email":"…",…}`
+    ///
+    /// O decoder customizado cobre ambos os casos.
     struct RespostaCadastro: Decodable {
         let usuario: UsuarioRemoto
         let accessToken: String?
@@ -59,6 +63,20 @@ actor SupabaseClient {
             case usuario = "user"
             case accessToken = "access_token"
             case refreshToken = "refresh_token"
+        }
+
+        init(from decoder: Decoder) throws {
+            let container = try decoder.container(keyedBy: CodingKeys.self)
+            self.accessToken = try container.decodeIfPresent(String.self, forKey: .accessToken)
+            self.refreshToken = try container.decodeIfPresent(String.self, forKey: .refreshToken)
+
+            // Tenta primeiro o objeto aninhado em "user" (email confirmation OFF).
+            // Se não existir, tenta decodificar o objeto plano no nível raiz (email confirmation ON).
+            if let nested = try container.decodeIfPresent(UsuarioRemoto.self, forKey: .usuario) {
+                self.usuario = nested
+            } else {
+                self.usuario = try UsuarioRemoto(from: decoder)
+            }
         }
 
         var sessao: Sessao? {
