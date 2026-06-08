@@ -57,12 +57,14 @@ final class EnderecoFormViewModel: ObservableObject {
 
     var formularioValido: Bool {
         !apelido.trimmingCharacters(in: .whitespaces).isEmpty
-        && cep.filter { $0.isNumber }.count == 8
+        && cep.count == 8
+        && cep.allSatisfy(\.isNumber)
         && !logradouro.trimmingCharacters(in: .whitespaces).isEmpty
         && !numero.trimmingCharacters(in: .whitespaces).isEmpty
         && !bairro.trimmingCharacters(in: .whitespaces).isEmpty
         && !cidade.trimmingCharacters(in: .whitespaces).isEmpty
         && uf.count == 2
+        && uf.allSatisfy(\.isLetter)
     }
 
     var cepFormatadoExibicao: String {
