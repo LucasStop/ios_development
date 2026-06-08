@@ -4,6 +4,8 @@ Projeto da disciplina **Mobile Development iOS — PUCPR (2026)** — Avaliaçã
 
 App iOS nativo em **SwiftUI** que simula uma vitrine virtual dos produtos artesanais vendidos na tradicional feira de domingo do Largo da Ordem, em Curitiba. O foco principal do projeto é a implementação rigorosa das diretrizes de **Acessibilidade (A11y)** da Apple.
 
+> Este projeto foi evoluído de **MVP de vitrine** para **e-commerce funcional** com autenticação (Supabase Auth), múltiplos endereços via ViaCEP, checkout em 4 etapas, lista de pedidos com timeline de status, política de privacidade/termos LGPD-compliant, design system próprio, CI no GitHub Actions e 42 testes automatizados. Toda a evolução está documentada em [`PLANO_ECOMMERCE.md`](PLANO_ECOMMERCE.md) e nos ADRs em [`docs/adr/`](docs/adr/).
+
 ## Links da entrega
 
 - **Vídeo de apresentação (YouTube — Não Listado):** *(adicionar link após gravação)*
@@ -24,27 +26,40 @@ App iOS nativo em **SwiftUI** que simula uma vitrine virtual dos produtos artesa
 
 ## Arquitetura
 
-**MVVM** (Model-View-ViewModel) — padrão idiomático do SwiftUI:
+**MVVM** + **Repository pattern** + **Design System** + **Composition Root** (`AppDependencies`). Organização por _feature_ conforme [ADR-0001](docs/adr/0001-stack-decisions.md):
 
 ```
 VitrineLargoOrdem/
-├── VitrineLargoOrdemApp.swift     — Ponto de entrada (@main)
-├── Models/
-│   └── ProdutoArtesanal.swift     — struct Identifiable com preço formatado/acessível
-├── Data/
-│   └── ProdutosMockData.swift     — Catálogo estático com 12 produtos típicos
-├── ViewModels/
-│   └── VitrineViewModel.swift     — ObservableObject (lista, busca, favoritos)
-└── Views/
-    ├── VitrineView.swift          — Tela principal (LazyVGrid + .searchable)
-    ├── ProdutoCardView.swift      — Card componentizado
-    ├── BotaoFavoritoView.swift    — Botão extraído (44×44 mínimo)
-    └── DetalhesProdutoView.swift  — Tela de detalhes com sortPriority
+├── App/
+│   ├── VitrineLargoOrdemApp.swift  — @main, registra AppDependencies + AuthGate
+│   ├── AppDependencies.swift       — Composition root (factories de ViewModels)
+│   ├── AuthGate.swift              — Roteia entre Login e RootTabView
+│   └── RootTabView.swift           — 4 abas: Vitrine, Favoritos, Carrinho, Perfil
+├── DesignSystem/
+│   ├── Tokens/                     — DSColor, DSFont, DSSpacing
+│   └── Components/                 — CategoryChipsView, SkeletonCardView
+├── Core/
+│   ├── Formatters/PrecoFormatter   — Preço visual + acessível
+│   ├── Persistence/                — ModelContainer SwiftData (8 entidades)
+│   ├── Repositories/               — ProductRepository, FavoriteRepository,
+│   │                                 CartRepository, AddressRepository, OrderRepository
+│   ├── Services/ViaCEPService      — Cliente HTTP do ViaCEP
+│   └── Supabase/                   — AppConfig + SupabaseClient (REST/Auth)
+└── Features/
+    ├── Vitrine/                    — Catálogo, busca, favoritos
+    ├── Carrinho/                   — Cart + CartItem persistente
+    ├── Favoritos/                  — Lista cruzada Produto × FavoriteItem
+    ├── Identidade/                 — Auth, Perfil, Endereços
+    ├── Checkout/                   — Fluxo 4 etapas com pagamento mock
+    ├── Pedidos/                    — Lista + Timeline com simulação local
+    ├── Onboarding/                 — 3 telas iniciais
+    └── Sobre/                      — Política, Termos, Sobre o app
 ```
 
-- **Models** não conhece UIKit/SwiftUI — pura lógica de domínio.
-- **ViewModel** anotado com `@MainActor` para evitar concorrência indevida; expõe `produtosFiltrados` derivado de `produtos + termoBusca`.
-- **Views** consomem o ViewModel via `@StateObject` e propagam ações via closures (`aoFavoritar`).
+- **Models** = `@Model` SwiftData puros, sem UIKit/SwiftUI.
+- **Repositories** abstraem a fonte (SwiftData local hoje, Supabase em paralelo).
+- **ViewModels** `@MainActor` recebem repositories via DI no init; expõem estado `@Published`.
+- **Views** consomem ViewModels via `@StateObject` / `@ObservedObject` e propagam ações por closures ou métodos.
 
 ## Acessibilidade (A11y) — destaque do projeto
 
@@ -148,6 +163,32 @@ O projeto tem CI rodando via GitHub Actions em todo push e PR para `main` e bran
 - **lint** (Ubuntu): SwiftLint com `.swiftlint.yml` do projeto
 
 Detalhes em [`.github/workflows/README.md`](../../.github/workflows/README.md). Configuração no [`ios.yml`](../../.github/workflows/ios.yml).
+
+## Backend (Supabase) — opcional
+
+O app funciona **100% offline**. Quando `USE_SUPABASE=1` (default), também sincroniza com o backend:
+
+- **URL e chave** já configuradas em [`AppConfig.swift`](VitrineLargoOrdem/Core/Supabase/AppConfig.swift) — sobrescreva via env vars `SUPABASE_URL` e `SUPABASE_ANON_KEY` no CI.
+- **Schema SQL** para rodar no SQL Editor do dashboard: [`docs/supabase/01-schema.sql`](docs/supabase/01-schema.sql) (idempotente; cria 4 tabelas, 2 ENUMs, triggers e Row-Level Security).
+- **Guia passo a passo**: [`docs/supabase/README.md`](docs/supabase/README.md).
+- **Fallback automático**: em qualquer erro de rede, o `SupabaseAuthService` recai no `LocalAuthService` sem perder UX (princípio offline-first).
+- **Sem Apple Developer**: removemos Sign in with Apple para não exigir o programa pago. Email/senha + modo convidado cobrem o MVP.
+
+## Funcionalidades do app
+
+| Tela | O que faz |
+|------|-----------|
+| **Onboarding** | 3 telas explicativas na primeira execução; flag em `@AppStorage`. |
+| **Login / Cadastro** | Email/senha com validação de regex, modo convidado, animação no AuthGate. |
+| **Vitrine** | LazyVGrid responsivo (2-4 colunas), chips de categoria, busca por nome/categoria, skeleton loading, empty state com botão "limpar filtros". |
+| **Detalhe do produto** | Imagem ampliada, preço acessível, estoque/disponibilidade, botão "Adicionar ao carrinho", ShareLink, contato com artesão. |
+| **Favoritos** | Lista cruzada com a vitrine; mesmo card; sincroniza ao remover/adicionar. |
+| **Carrinho** | Add/remove/qty, resumo (subtotal + frete + total), botão "Ir para o checkout". |
+| **Checkout 4 etapas** | Endereço → Pagamento → Revisão → Confirmação, com barra de progresso animada, aceite dos termos e número de pedido (VLO-XXXXXX). |
+| **Perfil** | Avatar via PhotosPicker (redimensionado a 512px), edição inline de nome, atalho para endereços e pedidos, botões Sair e Excluir conta (LGPD). |
+| **Endereços** | CRUD com swipe-actions (editar/excluir/padrão), busca automática por CEP via ViaCEP, autocomplete de logradouro/bairro/cidade/UF. |
+| **Pedidos** | Lista com badge colorido por status; detalhe com timeline visual (recebido → produção → despachado → entregue) que avança automaticamente a cada 12s para a demo. |
+| **Sobre / Política / Termos** | Documentos LGPD-compliant integrados no app. |
 
 ## Testes automatizados de acessibilidade
 
