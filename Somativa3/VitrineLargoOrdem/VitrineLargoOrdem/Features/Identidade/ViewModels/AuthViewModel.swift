@@ -1,6 +1,5 @@
 import Foundation
 import Combine
-import AuthenticationServices
 
 /// Estado global de autenticação. Fica como `@StateObject` no App
 /// para coordenar o AuthGate entre Login e Conteúdo principal.
@@ -79,36 +78,6 @@ final class AuthViewModel: ObservableObject {
             erro = authError
         } catch {
             erro = .desconhecido(error.localizedDescription)
-        }
-    }
-
-    func processarSignInComApple(_ resultado: Result<ASAuthorization, Error>) {
-        erro = nil
-        switch resultado {
-        case .success(let authorization):
-            guard let credential = authorization.credential as? ASAuthorizationAppleIDCredential else {
-                erro = .desconhecido("Resposta inesperada da Apple.")
-                return
-            }
-            let nomeApple = [credential.fullName?.givenName, credential.fullName?.familyName]
-                .compactMap { $0 }
-                .joined(separator: " ")
-            do {
-                let usuario = try authService.entrarComApple(
-                    nome: nomeApple.isEmpty ? nil : nomeApple,
-                    email: credential.email
-                )
-                aoEntrar(usuario)
-            } catch let authError as AuthError {
-                erro = authError
-            } catch {
-                erro = .desconhecido(error.localizedDescription)
-            }
-        case .failure(let error):
-            // Cancelamento silencioso pelo usuário não é erro de UX.
-            if (error as NSError).code != ASAuthorizationError.canceled.rawValue {
-                erro = .desconhecido(error.localizedDescription)
-            }
         }
     }
 

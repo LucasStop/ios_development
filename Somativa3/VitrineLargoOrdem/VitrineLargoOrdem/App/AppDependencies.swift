@@ -15,6 +15,8 @@ final class AppDependencies: ObservableObject {
     let favoriteRepository: FavoriteRepository
     let cartRepository: CartRepository
     let authService: AuthService
+    let addressRepository: AddressRepository
+    let cepService: CEPService
 
     init(modelContainer: ModelContainer) {
         self.modelContainer = modelContainer
@@ -23,6 +25,8 @@ final class AppDependencies: ObservableObject {
         self.favoriteRepository = LocalFavoriteRepository(context: context)
         self.cartRepository = LocalCartRepository(context: context)
         self.authService = LocalAuthService(context: context)
+        self.addressRepository = LocalAddressRepository(context: context)
+        self.cepService = ViaCEPService()
     }
 
     /// Inicializador padrão usado pelo App — usa o container persistente compartilhado.
@@ -50,5 +54,22 @@ final class AppDependencies: ObservableObject {
 
     func makeAuthViewModel() -> AuthViewModel {
         AuthViewModel(authService: authService)
+    }
+
+    func makePerfilViewModel(usuario: Usuario) -> PerfilViewModel {
+        PerfilViewModel(usuario: usuario)
+    }
+
+    func makeEnderecosViewModel(usuarioId: UUID) -> EnderecosViewModel {
+        EnderecosViewModel(repository: addressRepository, usuarioId: usuarioId)
+    }
+
+    func makeEnderecoFormViewModel(usuarioId: UUID, editando: Endereco? = nil) -> EnderecoFormViewModel {
+        EnderecoFormViewModel(
+            cepService: cepService,
+            addressRepository: addressRepository,
+            usuarioId: usuarioId,
+            editando: editando
+        )
     }
 }

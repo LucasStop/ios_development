@@ -1,11 +1,10 @@
 import SwiftUI
-import AuthenticationServices
 
-/// Tela de autenticação inicial. Permite login/cadastro com e-mail,
-/// Sign in with Apple e entrada como convidado.
+/// Tela de autenticação inicial. Permite cadastro/login com e-mail
+/// (via Supabase Auth quando integrado, hoje via LocalAuthService)
+/// e modo convidado para demonstração.
 struct LoginView: View {
     @ObservedObject var viewModel: AuthViewModel
-    @Environment(\.colorScheme) private var colorScheme
 
     var body: some View {
         ScrollView {
@@ -15,7 +14,6 @@ struct LoginView: View {
 
                 formulario
                 divisor
-                botoesSociais
                 ajudaConvidado
             }
             .padding(DSSpacing.lg)
@@ -118,19 +116,6 @@ struct LoginView: View {
                 .padding(.horizontal, DSSpacing.sm)
             Rectangle().fill(DSColor.border).frame(height: 1)
         }
-    }
-
-    private var botoesSociais: some View {
-        SignInWithAppleButton(.signIn) { request in
-            request.requestedScopes = [.fullName, .email]
-        } onCompletion: { result in
-            viewModel.processarSignInComApple(result)
-        }
-        .signInWithAppleButtonStyle(colorScheme == .dark ? .white : .black)
-        .frame(height: 50)
-        .clipShape(RoundedRectangle(cornerRadius: DSSpacing.cornerMd))
-        .accessibilityLabel("Entrar com a Apple")
-        .accessibilityHint("Usa sua conta Apple para autenticar.")
     }
 
     private var ajudaConvidado: some View {
