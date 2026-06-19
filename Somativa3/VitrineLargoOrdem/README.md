@@ -6,13 +6,14 @@ App iOS nativo em **SwiftUI** que simula uma vitrine virtual dos produtos artesa
 
 ## Links da entrega
 
-- **Vídeo de apresentação (YouTube — Não Listado):** *(adicionar link após gravação)*
+- **Vídeo de apresentação (YouTube — Não Listado):** https://youtu.be/36uqfZQWrus
 - **Repositório do projeto:** https://github.com/LucasStop/ios_development/tree/main/Somativa3/VitrineLargoOrdem
 
 ## Componentes do grupo
 
 - Lucas Stopinski da Silva
 - Lucas Bruno e Silva
+- Pedro Henrique Silva Guligurski
 
 ## Como rodar
 

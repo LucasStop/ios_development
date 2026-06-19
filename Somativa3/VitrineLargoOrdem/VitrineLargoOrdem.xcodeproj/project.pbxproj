@@ -138,8 +138,6 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = YES;
 				LastUpgradeCheck = 1430;
-				TargetAttributes = {
-				};
 			};
 			buildConfigurationList = 06F3184B18A00ACCAA415B15 /* Build configuration list for PBXProject "VitrineLargoOrdem" */;
 			developmentRegion = en;

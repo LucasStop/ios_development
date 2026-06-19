@@ -3,7 +3,7 @@
 **Disciplina:** Mobile Development iOS — PUCPR 2026
 **Avaliação:** Somativa SwiftUI (foco em Acessibilidade)
 **Duração alvo:** 14–16 minutos (limite permitido: 10–20 min)
-**Integrantes:** Lucas Stopinski da Silva • Lucas Bruno e Silva
+**Integrantes:** Lucas Stopinski da Silva • Lucas Bruno e Silva • Pedro Henrique Silva Guligurski
 
 ---
 
@@ -24,15 +24,15 @@
 | Bloco | Tempo | Quem fala | Tema |
 |-------|-------|-----------|------|
 | 1 | 0:00 – 0:30 | **Lucas Stopinski** | Abertura e apresentação |
-| 2 | 0:30 – 1:30 | **Lucas Bruno** | Contexto, tema e objetivos |
-| 3 | 1:30 – 4:00 | **Lucas Stopinski** | Demo visual no simulador |
+| 2 | 0:30 – 1:30 | **Pedro Henrique** | Contexto, tema e objetivos |
+| 3 | 1:30 – 4:00 | **Pedro Henrique** | Demo visual no simulador |
 | 4 | 4:00 – 7:30 | **Lucas Bruno** | **Demo de Acessibilidade** (VoiceOver + Dynamic Type) |
 | 5 | 7:30 – 8:30 | **Lucas Stopinski** | Arquitetura MVVM e estrutura de pastas |
 | 6 | 8:30 – 9:30 | **Lucas Bruno** | Model `ProdutoArtesanal` + propriedade `precoAcessivel` |
-| 7 | 9:30 – 11:00 | **Lucas Stopinski** | `LazyVGrid` adaptativo + `.searchable` |
+| 7 | 9:30 – 11:00 | **Pedro Henrique** | `LazyVGrid` adaptativo + `.searchable` |
 | 8 | 11:00 – 12:30 | **Lucas Bruno** | `BotaoFavoritoView` (44×44) + `ProdutoCardView` |
 | 9 | 12:30 – 13:30 | **Lucas Stopinski** | `DetalhesProdutoView` + `accessibilitySortPriority` |
-| 10 | 13:30 – 14:30 | **Lucas Bruno** | Dificuldades encontradas |
+| 10 | 13:30 – 14:30 | **Pedro Henrique** | Dificuldades encontradas |
 | 11 | 14:30 – 15:00 | **Lucas Stopinski** | Encerramento |
 
 ---
@@ -42,13 +42,13 @@
 **Mostrar:** webcam ou slide simples com nome do projeto.
 
 **Falar:**
-- "Olá, professor. Somos o Lucas Stopinski e o Lucas Bruno, da disciplina de Mobile Development iOS da PUCPR."
+- "Olá, professor. Somos o Lucas Stopinski, o Lucas Bruno e o Pedro Henrique, da disciplina de Mobile Development iOS da PUCPR."
 - "Este é nosso projeto somativo de SwiftUI: a **Vitrine Virtual da Feira do Largo da Ordem**."
 - "Nos próximos 15 minutos vamos demonstrar o app, com foco especial em **acessibilidade** — que vale 30% da nota — e fazer um walkthrough da arquitetura e do código."
 
 ---
 
-## Bloco 2 — Contexto e objetivos (0:30 – 1:30) — **Lucas Bruno**
+## Bloco 2 — Contexto e objetivos (0:30 – 1:30) — **Pedro Henrique**
 
 **Mostrar:** README aberto na seção de objetivos, ou um slide com o tema.
 
@@ -60,7 +60,7 @@
 
 ---
 
-## Bloco 3 — Demo visual (1:30 – 4:00) — **Lucas Stopinski**
+## Bloco 3 — Demo visual (1:30 – 4:00) — **Pedro Henrique**
 
 **Mostrar:** simulador iPhone 17 com o app aberto.
 
@@ -151,7 +151,7 @@
 
 ---
 
-## Bloco 7 — LazyVGrid + Searchable (9:30 – 11:00) — **Lucas Stopinski**
+## Bloco 7 — LazyVGrid + Searchable (9:30 – 11:00) — **Pedro Henrique**
 
 **Mostrar:** `Views/VitrineView.swift`.
 
@@ -207,7 +207,7 @@
 
 ---
 
-## Bloco 10 — Dificuldades (13:30 – 14:30) — **Lucas Bruno**
+## Bloco 10 — Dificuldades (13:30 – 14:30) — **Pedro Henrique**
 
 **Mostrar:** README aberto na seção "Dificuldades encontradas" ou continuar no código.
 
@@ -247,7 +247,7 @@
 ### Ensaio
 - [ ] Fazer um ensaio completo cronometrado para garantir que cabe em 15 minutos
 - [ ] Verificar áudio (sem eco, sem ruído de fundo)
-- [ ] Combinar transições entre apresentadores ("passo pra você, Bruno…")
+- [ ] Combinar transições entre apresentadores ("passo pra você, Bruno…" / "te devolvo, Pedro…")
 
 ## Dicas finais
 
